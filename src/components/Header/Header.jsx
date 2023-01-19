@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
+import { useRouter } from 'next/router';
 
 const HeaderContainer = styled.div`
     width: 100vw;
@@ -11,18 +12,28 @@ const HeaderContainer = styled.div`
     align-items: center;
     `
 const Placeholder = styled.div`
-width: 100px;
-height: 100px;
-background-color: red;
-margin: 20px;
+    width: 100px;
+    height: 100px;
+    background-color: teal;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 export default function Header() {
-    const handleClick = () => {
-        console.log('clicked')
+    const router = useRouter();
+
+    const handleClickRaisePet = () => {
+        // router.push('/login')
+        alert("login page or choose pet page")
+    }
+    const handleClickSearch = () => {
+        // router.push('/search')
+        alert("search for pets page")
     }
     return (
         <HeaderContainer>
-            <Placeholder>placeholder logo</Placeholder>
+            <Placeholder>Placeholder</Placeholder>
             <Typography
                 text="Practice makes perfect — start with a virtual pet so you become prepared to raise a new one"
                 size="16px"
@@ -36,8 +47,8 @@ export default function Header() {
                 width="28%"
                 height="100%"
             />
-            <Button onClick={handleClick} text="Raise Virtual Pet" />
-            <Button onClick={handleClick} text="I'm Ready for a Real Pet" />
+            <Button onClick={handleClickRaisePet} text="Raise Virtual Pet" />
+            <Button onClick={handleClickSearch} text="I'm Ready for a Real Pet" />
 
         </HeaderContainer>
     )
