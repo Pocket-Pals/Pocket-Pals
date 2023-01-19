@@ -12,9 +12,12 @@ const HeaderContainer = styled.div`
     align-items: center;
     `
 const Placeholder = styled.div`
-    width: 100px;
-    height: 100px;
-    background-color: teal;
+    width: 200px;
+    height: 200px;
+    background-image: url('/placeholderlogo.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     margin: 20px;
     display: flex;
     justify-content: center;
@@ -33,7 +36,7 @@ export default function Header() {
     }
     return (
         <HeaderContainer>
-            <Placeholder>Placeholder</Placeholder>
+            <Placeholder />
             <Typography
                 text="Practice makes perfect — start with a virtual pet so you become prepared to raise a new one"
                 size="16px"
