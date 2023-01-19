@@ -2,15 +2,7 @@ import { Button, Space } from "antd";
 import styled from "styled-components";
 
 const StyledButton = styled(Button)`
-  width: ${(props) => props.width || "100%"};
-`;
-
-const StyledSpacer = styled(Space)`
-  width: "100%";
-`;
-
-const Container = styled.div`
-  width: "100%";
+  width: ${(props) => props.width || null};
 `;
 
 export default function MyButton({ text, onClick = () => {}, icon, type }) {
