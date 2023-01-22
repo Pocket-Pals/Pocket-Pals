@@ -3,6 +3,7 @@ import MyCard from "src/components/Card/Card";
 import Button from "src/components/Button/Button";
 import { useState, useEffect } from "react";
 import { Flex } from "src/styles/styles";
+import Auth from "src/components/Auth/Auth";
 
 export default function () {
   const [dogs, setDogs] = useState([]);
@@ -27,7 +28,7 @@ export default function () {
 
   return (
     <>
-      <Flex width="fit-content">
+      {/* <Flex width="fit-content">
         <Button text="Get dogs" onClick={getDogs} />
       </Flex>
       {dogs.map((o, i) => (
@@ -45,7 +46,8 @@ export default function () {
           tags={o.tags[2]}
           gender={o.gender}
         />
-      ))}
+      ))} */}
+      <Auth />
     </>
   );
 }
