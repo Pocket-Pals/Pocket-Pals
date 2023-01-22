@@ -4,6 +4,8 @@ import Button from "src/components/Button/Button";
 import { useState, useEffect } from "react";
 import { Flex } from "src/styles/styles";
 import Auth from "src/components/Auth/Auth";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "/firebase";
 
 export default function () {
   const [dogs, setDogs] = useState([]);
@@ -25,6 +27,30 @@ export default function () {
   // useEffect(() => {
   //   getDogs();
   // }, []);
+
+  const addData = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        first: "Ada",
+        last: "Lovelace",
+        born: 1815,
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  const readData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "users"));
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+      });
+    } catch (e) {
+      console.error("Error reading document: ", e);
+    }
+  };
 
   return (
     <>
@@ -48,6 +74,8 @@ export default function () {
         />
       ))} */}
       <Auth />
+      <Button text="Add data" onClick={addData} />
+      <Button text="Read data" onClick={readData} />
     </>
   );
 }
