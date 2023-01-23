@@ -9,55 +9,95 @@ const ButtonDiv = styled.div`
     justify-content: center;
     align-items: center;
     gap: 60px;
+    margin: 20px;
 `
 
-//replace this with actual UI
-const PlaceholderBox = styled.div`
-    display: flex;
+const TutorialImage = styled.img`
+    display: block;
     justify-content: center;
     align-items: center;
     margin: auto;
-    width: 500px;
-    height: 300px;
-    background-color: red;
+    margin-top: 20px;
+    margin-bottom:20px;
+    width: 600px;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     `
 
-export function TutorialDescription({
-    text = "Welcome to your virtual home! Here are some quick pointers to get you started on raising your Pocket Pal."
+export function ImageDiv({
+    img = "/svgs/livingroom_sunny.svg",
 }) {
     const r = useRouter();
-    var { tut } = r.query;
-    if (tut === undefined) {
-        tut = 0;
+    var { page } = r.query;
+    if (page === undefined) {
+        page = 0;
+        img = "/svgs/livingroom_sunny.svg"
     }
-
-    if (tut === "1") {
-        text = "These are your Pocket Pal's current stats. These stats will periodically decrease overtime if you don't take care of your Pocket Pal."
+    if (page === "1") {
+        img = "/svgs/livingroom_sunny.svg"
     }
-    if (tut === "2") {
-        text = "The window displays the current weather. Make sure to take a walk with your Pocket Pal when the weather is nice!"
+    if (page === "2") {
+        img = "/svgs/livingroom_bowls.svg"
     }
-    if (tut === "3") {
-        text = "Your pet will run away if you don't take care of it, so make sure to regularly check on it to keep it happy and healthy!"
+    if (page === "3") {
+        img = "/svgs/livingroom_sponge.svg"
     }
-    if (tut >= "4") {
-        text = "lol"
-        tut === 0;
-        return <div>
-            <Button text="Back to Page 1 (for now)"
+    if (page === "4") {
+        img = "/svgs/livingroom_shoe.svg"
+    }
+    if (page === "5") {
+        img = "/placeholderlogo.svg"
+    }
+    if (page === "6") {
+        img = "/placeholderlogo.svg"
+    }
+    return (
+        <>
+            <Button text="Skip Tutorial (goes to page 6)"
                 onClick={
                     () => r.push({
                         query: {
-                            tut: tut = 0
+                            page: page = 6
                         }
                     })
-                } />
-        </div>
+                }
+            />
+            <TutorialImage src={img} />
+        </>
+    )
+}
+
+export function TutorialDiv({
+    text = "Welcome to your virtual home! Here are some quick pointers to get you started on raising your Pocket Pal."
+}) {
+    const r = useRouter();
+    var { page } = r.query;
+    if (page === undefined) {
+        page = 0;
+        text = "Welcome to your virtual home! Here are some quick pointers to get you started on raising your Pocket Pal."
     }
 
-    return (
-        <>
-            <PlaceholderBox />
+    if (page === "1") {
+        text = "These are your Pocket Pal's stats. You can monitor your Pocket Pal's hunger, energy level, and happiness."
+    }
+    if (page === "2") {
+        text = "These are your Pocket Pal's food and water bowls. Fill the bowls and feed your Pocket Pal whenever it's hungry!"
+    }
+    if (page === "3") {
+        text = "Make sure you keep your Pocket Pal clean and out of trouble! Click on the sponge to clean your Pocket Pal."
+    }
+    if (page === "4") {
+        text = "The window shows the current weather. Click on the shoes to for a walk with your Pocket Pal when the weather is nice!"
+    }
+    if (page === "5") {
+        text = "Your pet will run away if you don't take care of it, so make sure to regularly check on it to keep it happy and healthy!"
+    }
+    if (page >= "6") {
+        text = "You're ready! You can always come back to this tutorial by clicking on the question mark in the top right corner."
+        page === 0;
+        return <div>
             <Typography
                 text={text}
                 size="24px"
@@ -68,7 +108,33 @@ export function TutorialDescription({
                 display="block"
                 margin="auto"
                 padding="0"
-                width="28%"
+                width="35%"
+                height="100%"
+            />
+            <Button text="Back to Page 1 (for now)"
+                onClick={
+                    () => r.push({
+                        query: {
+                            page: page = 0
+                        }
+                    })
+                } />
+        </div>
+    }
+
+    return (
+        <>
+            <Typography
+                text={text}
+                size="24px"
+                color="#2F2F2F"
+                weight="regular"
+                family="sans-serif"
+                align="center"
+                display="block"
+                margin="auto"
+                padding="0"
+                width="35%"
                 height="100%"
             />
             <ButtonDiv>
@@ -76,7 +142,7 @@ export function TutorialDescription({
                     onClick={
                         () => r.replace({
                             query: {
-                                tut: tut === undefined ? tut : Math.max(0, Number(tut) - 1)
+                                page: page === undefined ? page : Math.max(0, Number(page) - 1)
                             }
                         })
                     } />
@@ -84,7 +150,7 @@ export function TutorialDescription({
                     onClick={
                         () => r.replace({
                             query: {
-                                tut: tut === undefined ? tut : Math.max(0, Number(tut) + 1)
+                                page: page === undefined ? page : Math.max(0, Number(page) + 1)
                             }
                         })
                     }
@@ -93,3 +159,4 @@ export function TutorialDescription({
         </>
     )
 }
+
