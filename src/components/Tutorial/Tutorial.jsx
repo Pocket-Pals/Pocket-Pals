@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import Pagination from '../Pagination/Pagination';
 
 const ButtonDiv = styled.div`
     display: flex;
@@ -12,7 +14,7 @@ const ButtonDiv = styled.div`
     margin: 20px;
 `
 
-const TutorialImage = styled.img`
+const TutorialImage = styled(Image)`
     display: block;
     justify-content: center;
     align-items: center;
@@ -30,7 +32,7 @@ export function ImageDiv({
     img = "/svgs/livingroom_sunny.svg",
 }) {
     const r = useRouter();
-    var { page } = r.query;
+    let { page } = r.query;
     if (page === undefined) {
         page = 0;
         img = "/svgs/livingroom_sunny.svg"
@@ -64,7 +66,7 @@ export function ImageDiv({
                     })
                 }
             />
-            <TutorialImage src={img} />
+            <TutorialImage src={img} width={400} height={400} />
         </>
     )
 }
@@ -73,7 +75,7 @@ export function TutorialDiv({
     text = "Welcome to your virtual home! Here are some quick pointers to get you started on raising your Pocket Pal."
 }) {
     const r = useRouter();
-    var { page } = r.query;
+    let { page } = r.query;
     if (page === undefined) {
         page = 0;
         text = "Welcome to your virtual home! Here are some quick pointers to get you started on raising your Pocket Pal."
@@ -111,19 +113,22 @@ export function TutorialDiv({
                 width="35%"
                 height="100%"
             />
-            <Button text="Back to Page 1 (for now)"
-                onClick={
-                    () => r.push({
-                        query: {
-                            page: page = 0
-                        }
-                    })
-                } />
+            <ButtonDiv>
+                <Button text="Back to Page 1 (for now)"
+                    onClick={
+                        () => r.push({
+                            query: {
+                                page: page = 0
+                            }
+                        })
+                    } />
+            </ButtonDiv>
         </div>
     }
 
     return (
         <>
+            <Pagination />
             <Typography
                 text={text}
                 size="24px"
@@ -146,7 +151,7 @@ export function TutorialDiv({
                             }
                         })
                     } />
-                <Button text="Next" type="primary"
+                <Button text="Next" type="primary" bgcolor="#333"
                     onClick={
                         () => r.replace({
                             query: {
