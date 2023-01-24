@@ -38,79 +38,16 @@ export default function Pagination() {
     if (page === undefined) {
         page = 0;
     }
-    if (page === '0') {
-        return <PaginationDiv>
-            <PaginationFill />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-        </PaginationDiv>
+    let pages = [];
+    for (let i = 0; i < 6; i++) {
+        pages.push(i);
     }
-    if (page === '1') {
-        return <PaginationDiv>
-            <PaginationDefault />
-            <PaginationFill />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-        </PaginationDiv>
-    }
-    if (page === '2') {
-        return <PaginationDiv>
-            <PaginationDefault />
-            <PaginationFill />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-        </PaginationDiv>
-    }
-    if (page === '3') {
-        return <PaginationDiv>
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationFill />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-        </PaginationDiv>
 
-    }
-    if (page === '4') {
-        return <PaginationDiv>
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationFill />
-            <PaginationDefault />
-            <PaginationDefault />
+    return (
+        <PaginationDiv>
+            {pages.map((p) => {
+                return p === Number(page) ? <PaginationFill key={p} /> : <PaginationDefault key={p} />
+            })}
         </PaginationDiv>
-
-    }
-    if (page === '5') {
-        return <PaginationDiv>
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationFill />
-            <PaginationDefault />
-        </PaginationDiv>
-    }
-    if (page === '6') {
-        return <></>
-    }
-    else {
-        return <PaginationDiv>
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationDefault />
-            <PaginationFill />
-        </PaginationDiv>
-    }
+    );
 }
