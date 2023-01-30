@@ -5,7 +5,7 @@ const StyledButton = styled(Button)`
   width: ${(props) => props.width || null};
 `;
 
-export default function MyButton({ text, onClick = () => {}, icon, type }) {
+export default function MyButton({ text, onClick = () => { }, icon, type }) {
   return (
     <>
       <StyledButton
