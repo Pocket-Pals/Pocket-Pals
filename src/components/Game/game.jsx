@@ -45,14 +45,15 @@ export default function Game(){
     this.load.image('ground', '/assets/items/ground.png')
     this.load.spritesheet('player', 
       '/assets/character/dude.png',
-      { frameWidth: 32, frameHeight: 48 }
-      
-      )
+      { frameWidth: 32, frameHeight: 48 })
+
   }
 
   let platforms
   let player
   let stars
+  let score = 0
+  let scoreText
 
   function create (){
     this.add.image(400, 300, 'sky')
@@ -104,13 +105,19 @@ export default function Game(){
       
     })
 
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' })
 
+    //physics
     this.physics.add.collider(player, platforms)
     this.physics.add.collider(stars, platforms)
     this.physics.add.overlap(player, stars, collectStar, null, this)
 
     function collectStar (player, star) {
-      star.disableBody(true, true);
+
+      score += 10
+      scoreText.setText('Score: ' + score)
+
+      star.disableBody(true, true)
     }
   }
 
