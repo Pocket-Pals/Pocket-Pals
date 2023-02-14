@@ -8,8 +8,8 @@ export default function Game(){
 
   let config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1920,
+    height: 1080,
     physics: {
       default: 'arcade',
       arcade: {
@@ -44,8 +44,8 @@ export default function Game(){
     this.load.image('star', '/assets/items/star.png')
     this.load.image('ground', '/assets/items/ground.png')
     this.load.spritesheet('player', 
-      '/assets/character/dude.png',
-      { frameWidth: 32, frameHeight: 48 }
+      '/assets/character/spritesheet1.png',
+      { frameWidth: 344, frameHeight: 369 }
       
       )
   }
@@ -60,13 +60,14 @@ export default function Game(){
 
     platforms = this.physics.add.staticGroup()
 
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody()
+    platforms.create(400, 568, 'ground').setScale(1).refreshBody()
 
     platforms.create(600, 400, 'ground')
     platforms.create(50, 250, 'ground')
     platforms.create(750, 220, 'ground')
 
-    player = this.physics.add.sprite(100, 450, 'player')
+    player = this.physics.add.sprite(150, 100, 'player').setScale(0.4).setCrop(0, 0, 400, 600)
+    
 
     player.setBounce(0.2)
     player.setCollideWorldBounds(true)
