@@ -43,3 +43,8 @@ export const Flex = styled.div`
   gap: ${(props) => props.gap || "0"};
   width: ${(props) => props.width || "auto"};
 `;
+
+export const FullContainer = styled.div`
+  width: ${(props) => props.width || "100vw"};
+  height: ${(props) => props.height || "100vh"};
+`;
