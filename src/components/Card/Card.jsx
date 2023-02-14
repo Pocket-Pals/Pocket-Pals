@@ -13,6 +13,9 @@ const StyledCard = styled(Card)`
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
+  &:hover {
+    translate-y: 5px;
+  }
 `;
 
 const { Meta } = Card;
@@ -51,9 +54,6 @@ export default function MyCard({ ...props }) {
   return (
     <>
       <StyledCard
-        style={{
-          width: 300,
-        }}
         loading={loading}
         cover={
           <img

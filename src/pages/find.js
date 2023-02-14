@@ -9,8 +9,6 @@ const CardConatiner = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem;
-  // margin: 1rem;
-  // padding: 1rem;
   background-color: #f5f5f5;
   border-radius: 0.5rem;
   width: 100%;
@@ -43,6 +41,7 @@ export default function find() {
     const data = await response.json();
     const dogData = data.animals.filter((animal) => animal.type === "Dog");
     console.log(dogData);
+    // console.log(dogData[0].photos[0].medium);
     setDogs(dogData);
   };
 
