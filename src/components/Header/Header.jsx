@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 const HeaderContainer = styled.div`
@@ -11,24 +12,27 @@ const HeaderContainer = styled.div`
     justify-content: center;
     align-items: center;
     `
-const Placeholder = styled.div`
-    width: 200px;
-    height: 200px;
-    background-image: url('/placeholderlogo.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 20px;
-    display: flex;
+const Placeholder = styled(Image)`
+    display: block;
     justify-content: center;
     align-items: center;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom:10px;
+    width: 600px;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 `
-export default function Header() {
+export default function Header({
+    img = "/svgs/logo.svg"
+}) {
     const router = useRouter();
 
     const handleClickRaisePet = () => {
         // router.push('/login')
-        alert("login page or choose pet page")
+        router.push('/tutorial')
     }
     const handleClickSearch = () => {
         // router.push('/search')
@@ -36,10 +40,10 @@ export default function Header() {
     }
     return (
         <HeaderContainer>
-            <Placeholder />
+            <Placeholder src={img} width={600} height={600} />
             <Typography
                 text="Practice makes perfect — start with a virtual pet so you become prepared to raise a new one"
-                size="16px"
+                size="18px"
                 color="#2F2F2F"
                 weight="regular"
                 family="sans-serif"
