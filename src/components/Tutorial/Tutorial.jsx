@@ -57,11 +57,11 @@ export function ImageDiv({
     }
     return (
         <>
-            <Button text="Skip Tutorial (goes to page 6)"
+            <Button text="Skip Tutorial (goes to page 5 for now)"
                 onClick={
                     () => r.push({
                         query: {
-                            page: page = 6
+                            page: page = 5
                         }
                     })
                 }
@@ -107,13 +107,9 @@ export function TutorialDiv({
                 height="100%"
             />
             <ButtonDiv>
-                <Button text="Back to Page 1 (for now)"
+                <Button text="Select Pocket Pal" type="primary" bgcolor="#333"
                     onClick={
-                        () => r.push({
-                            query: {
-                                page: page = 0
-                            }
-                        })
+                        () => r.push("/select")
                     } />
             </ButtonDiv>
         </div>
@@ -137,13 +133,18 @@ export function TutorialDiv({
             />
             <ButtonDiv>
                 <Button text="Back" type="secondary"
-                    onClick={
-                        () => r.replace({
-                            query: {
-                                page: page === undefined ? page : Math.max(0, Number(page) - 1)
-                            }
-                        })
-                    } />
+                    onClick={() => {
+                        if (page === undefined || Number(page) === 0) {
+                            r.push('/');
+                        } else {
+                            r.replace({
+                                query: {
+                                    page: Math.max(0, Number(page) - 1)
+                                }
+                            });
+                        }
+                    }}
+                />
                 <Button text="Next" type="primary" bgcolor="#333"
                     onClick={
                         () => r.replace({

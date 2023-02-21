@@ -19,7 +19,6 @@ const DogCardContainers = styled.div`
 const DogCard = styled.div`
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     align-items: center;
     max-width: 250px;
     max-height: 450px;
@@ -61,12 +60,32 @@ const StatFilled = styled.div`
     border-radius: 10px;
     padding: 0;
 `
+const dogImages = [
+    {
+        difficulty: "easy",
+        src: "/svgs/ridgehound.svg",
+    },
+    {
+        difficulty: "medium",
+        src: "/svgs/corgi.svg",
+    },
+    {
+        difficulty: "hard",
+        src: "/svgs/samoyed.svg",
+    },
+];
 
 export default function SelectCard({
     easy = "/svgs/ridgehound.svg",
     medium = "/svgs/corgi.svg",
     hard = "/svgs/samoyed.svg",
 }) {
+    const router = useRouter();
+
+    const handleSelect = (difficulty) => {
+        alert(`selected ${difficulty} dog`);
+        // router.push(`/game/${difficulty}`);
+    };
     return (
         <>
             <Typography
@@ -141,18 +160,14 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
+                            {[...Array(3)].map((_, index) => (
+                                <StatUnfilled key={index}>
+                                    <StatFilled />
+                                </StatUnfilled>
+                            ))}
                         </div>
                     </StatsContainer>
-                    <Button text="Select" />
+                    <Button onClick={() => handleSelect("easy")} text="Select" />
                 </DogCard>
                 <DogCard>
                     <Typography
@@ -212,18 +227,14 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
+                            {[...Array(3)].map((_, index) => (
+                                <StatUnfilled key={index}>
+                                    <StatFilled />
+                                </StatUnfilled>
+                            ))}
                         </div>
                     </StatsContainer>
-                    <Button text="Select" />
+                    <Button onClick={() => handleSelect("medium")} text="Select" />
                 </DogCard>
                 <DogCard>
                     <Typography
@@ -283,18 +294,14 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled />
-                            </StatUnfilled>
+                            {[...Array(3)].map((_, index) => (
+                                <StatUnfilled key={index}>
+                                    <StatFilled />
+                                </StatUnfilled>
+                            ))}
                         </div>
                     </StatsContainer>
-                    <Button text="Select" />
+                    <Button onClick={() => handleSelect("hard")} text="Select" />
                 </DogCard>
             </DogCardContainers>
         </>
