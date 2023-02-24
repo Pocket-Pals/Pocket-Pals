@@ -3,6 +3,7 @@ import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import data from '../../data/dogStats.json';
 
 const DogCardContainers = styled.div`
     display: flex;
@@ -15,6 +16,7 @@ const DogCardContainers = styled.div`
     @media (max-width: 1000px) {
         flex-direction: column;
         gap: 30px;
+    }
 `
 const DogCard = styled.div`
     display: flex;
@@ -45,35 +47,20 @@ const StatsContainer = styled.div`
 
 const StatUnfilled = styled.div`
     display: flex;
-    width: 140px;   
-    height: 15px;
-    background-color: rgb(200, 200, 200);
-    border-radius: 10px;
-    padding: 0;
-    margin: 13px;
+    flex-direction: column;
+    justify-content: space-between; 
+    padding-top: 15px;
 `
 const StatFilled = styled.div`
     display: flex;
-    width: 40px;   
+    width: ${(props) => props.width * 10}px;   
     height: 15px;
     background-color: rgb(0, 150, 250);
     border-radius: 10px;
     padding: 0;
+    flex-direction: column;
+    justify-content: space-between;
 `
-const dogImages = [
-    {
-        difficulty: "easy",
-        src: "/svgs/ridgehound.svg",
-    },
-    {
-        difficulty: "medium",
-        src: "/svgs/corgi.svg",
-    },
-    {
-        difficulty: "hard",
-        src: "/svgs/samoyed.svg",
-    },
-];
 
 export default function SelectCard({
     easy = "/svgs/ridgehound.svg",
@@ -86,6 +73,8 @@ export default function SelectCard({
         alert(`selected ${difficulty} dog`);
         // router.push(`/game/${difficulty}`);
     };
+
+
     return (
         <>
             <Typography
@@ -160,11 +149,15 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            {[...Array(3)].map((_, index) => (
-                                <StatUnfilled key={index}>
-                                    <StatFilled />
-                                </StatUnfilled>
-                            ))}
+                            <StatUnfilled>
+                                <StatFilled width={data[0].barkLevel} />
+                            </StatUnfilled>
+                            <StatUnfilled>
+                                <StatFilled width={data[0].social} />
+                            </StatUnfilled>
+                            <StatUnfilled>
+                                <StatFilled width={data[0].energy} />
+                            </StatUnfilled>
                         </div>
                     </StatsContainer>
                     <Button onClick={() => handleSelect("easy")} text="Select" />
@@ -227,11 +220,15 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            {[...Array(3)].map((_, index) => (
-                                <StatUnfilled key={index}>
-                                    <StatFilled />
-                                </StatUnfilled>
-                            ))}
+                            <StatUnfilled>
+                                <StatFilled width={data[1].barkLevel} />
+                            </StatUnfilled>
+                            <StatUnfilled>
+                                <StatFilled width={data[1].social} />
+                            </StatUnfilled>
+                            <StatUnfilled>
+                                <StatFilled width={data[1].energy} />
+                            </StatUnfilled>
                         </div>
                     </StatsContainer>
                     <Button onClick={() => handleSelect("medium")} text="Select" />
@@ -294,11 +291,15 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            {[...Array(3)].map((_, index) => (
-                                <StatUnfilled key={index}>
-                                    <StatFilled />
-                                </StatUnfilled>
-                            ))}
+                            <StatUnfilled>
+                                <StatFilled width={data[2].barkLevel} />
+                            </StatUnfilled>
+                            <StatUnfilled>
+                                <StatFilled width={data[2].social} />
+                            </StatUnfilled>
+                            <StatUnfilled>
+                                <StatFilled width={data[2].energy} />
+                            </StatUnfilled>
                         </div>
                     </StatsContainer>
                     <Button onClick={() => handleSelect("hard")} text="Select" />

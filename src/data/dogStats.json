@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "barkLevel": 3,
+        "social": 6,
+        "energy": 5
+    },
+    {
+        "id": 2,
+        "barkLevel": 7,
+        "social": 9,
+        "energy": 9
+    },
+    {
+        "id": 3,
+        "barkLevel": 8,
+        "social": 9,
+        "energy": 10
+    }
+]
