@@ -73,10 +73,13 @@ export default function SelectCard({
         alert(`selected ${difficulty} dog`);
         // router.push(`/game/${difficulty}`);
     };
-
+    const handleBackToTutorial = () => {
+        router.push('/tutorial')
+    }
 
     return (
         <>
+            <Button onClick={handleBackToTutorial} text="Back" />
             <Typography
                 text="Select a Pocket Pal"
                 size="2rem"

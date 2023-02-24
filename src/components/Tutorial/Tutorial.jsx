@@ -50,20 +50,17 @@ export function ImageDiv({
         img = "/svgs/livingroom_shoe.svg"
     }
     if (page === "5") {
-        img = "/placeholderlogo.svg"
+        img = "/svgs/ran_away.svg"
     }
     if (page === "6") {
-        img = "/placeholderlogo.svg"
+        img = "/svgs/pet_ready.svg"
     }
     return (
         <>
-            <Button text="Skip Tutorial (goes to page 5 for now)"
+            <Button text="Skip Tutorial"
                 onClick={
-                    () => r.push({
-                        query: {
-                            page: page = 5
-                        }
-                    })
+                    () => r.push('/select')
+
                 }
             />
             <TutorialImage src={img} width={400} height={400} />
