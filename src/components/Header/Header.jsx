@@ -42,7 +42,7 @@ export default function Header({
         <HeaderContainer>
             <Placeholder src={img} width={600} height={600} />
             <Typography
-                text="Practice makes perfect — start with a virtual pet so you become prepared to raise a new one"
+                text="Practice makes perfect — raise a virtual Pocket Pal so you become prepared to raise a new pet"
                 size="18px"
                 color="#2F2F2F"
                 weight="regular"
@@ -54,8 +54,8 @@ export default function Header({
                 width="28%"
                 height="100%"
             />
-            <Button onClick={handleClickRaisePet} text="Raise Virtual Pet" />
-            <Button onClick={handleClickSearch} text="I'm Ready for a Real Pet" />
+            <Button onClick={handleClickRaisePet} text="Raise Pocket Pal" />
+            <Button onClick={handleClickSearch} text="Search for a Real Pet" />
 
         </HeaderContainer>
     )

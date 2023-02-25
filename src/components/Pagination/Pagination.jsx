@@ -29,7 +29,7 @@ const PaginationFill = styled.div`
     height: 15px;
     width: 15px;
     border-radius: 50%;
-    background-color: purple;
+    background-color: #E66525;
     `
 
 export default function Pagination() {
