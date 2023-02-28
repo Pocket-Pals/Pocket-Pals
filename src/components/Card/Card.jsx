@@ -1,32 +1,62 @@
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Avatar, Card } from "antd";
-import { GrandParent, Parent, Child, Type } from "src/styles/styles";
+import { Avatar, Card, Skeleton, Switch } from "antd";
+import { GrandParent, Parent, Child } from "src/styles/styles";
 import Button from "../Button/Button";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+const StyledCard = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-radius: 10px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1, 0.8);
+  transition: all 0.3s ease-in-out;
+  // max-width: 300px;
+  // width: 100% !important;
+  // margin: 0 auto;
+  &:hover {
+    translate-y: 5px;
+  }
+`;
 
 const { Meta } = Card;
-export default function MyCard({
-  title,
-  description,
-  image,
-  avatar,
-  breed,
-  age,
-  adoptStatus,
-  gender,
-  size,
-  tags,
-  tagsOne,
-}) {
+export default function MyCard({ ...props }) {
+  const {
+    title,
+    description,
+    image,
+    avatar,
+    breed,
+    age,
+    adoptStatus,
+    gender,
+    size,
+    tags,
+    tagsOne,
+    handleClick,
+  } = props;
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  });
+
+  let trimmedDescription = description;
+  if (description) {
+    trimmedDescription =
+      description.length > 100
+        ? description.substring(0, 80) + "..."
+        : description;
+  }
+
   return (
     <>
-      <Card
-        style={{
-          width: 300,
-        }}
+      <StyledCard
+        loading={loading}
         cover={
           <img
             alt="card cover"
@@ -35,9 +65,11 @@ export default function MyCard({
         }
       >
         <Meta
-          avatar={<Avatar src={avatar || "https://placekitten.com/100"} />}
+          avatar={
+            <Avatar src={avatar || "/placeholders/placeholder-image.png"} />
+          }
           title={title || "Default Title"}
-          description={description || "No description provided."}
+          description={trimmedDescription || "No description provided."}
         />
 
         <GrandParent>
@@ -48,7 +80,7 @@ export default function MyCard({
           </Parent>
           <Parent>
             <Child width="100%">
-              <p>{tagsOne || "NO TAGS"}</p>
+              <p>{tagsOne || "TAGS"}</p>
             </Child>
             <Child>
               <p>{age || "AGE"}</p>
@@ -68,9 +100,9 @@ export default function MyCard({
               <p>{gender || "GENDER"}</p>
             </Child>
           </Parent>
-          <Button />
+          <Button text="Adopt Me" onClick={handleClick} />
         </GrandParent>
-      </Card>
+      </StyledCard>
     </>
   );
 }

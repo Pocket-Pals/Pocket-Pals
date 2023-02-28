@@ -3,9 +3,6 @@ import MyCard from "src/components/Card/Card";
 import Button from "src/components/Button/Button";
 import { useState, useEffect } from "react";
 import { Flex } from "src/styles/styles";
-import Auth from "src/components/Auth/Auth";
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from "/firebase";
 
 export default function () {
   const [dogs, setDogs] = useState([]);
@@ -17,18 +14,22 @@ export default function () {
   // };
 
   const getDogs = async () => {
-    const response = await fetch("/api/petfinder/animals");
-    const data = await response.json();
-    const dogData = data.animals.filter((animal) => animal.type === "Dog");
-    console.log(dogData);
-    setDogs(dogData);
+    try {
+      const response = await fetch("/api/petfinder/animals");
+      const data = await response.json();
+      const dogData = data.animals.filter((animal) => animal.type === "Dog");
+      console.log(dogData);
+      setDogs(dogData);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   // useEffect(() => {
   //   getDogs();
   // }, []);
 
-  const addData = async () => {
+  /*  const addData = async () => {
     try {
       const docRef = await addDoc(collection(db, "users"), {
         first: "Ada",
@@ -51,18 +52,25 @@ export default function () {
       console.error("Error reading document: ", e);
     }
   };
+ */
+
+  const petRoute = (o) => {
+    window.open(o.url, "_blank");
+  };
 
   return (
     <>
-      {/* <Flex width="fit-content">
+      <Flex width="fit-content">
         <Button text="Get dogs" onClick={getDogs} />
       </Flex>
       {dogs.map((o, i) => (
         <MyCard
           key={i}
           title={o.name}
-          image={o.primary_photo_cropped.full}
-          avatar={o.photos[0].medium}
+          // image={
+          //   o.primary_photo_cropped.full || "https://placekitten.com/300/300"
+          // }
+          // avatar={o.photos[0].medium}
           description={o.description}
           breed={o.breeds.primary}
           age={o.age}
@@ -71,11 +79,12 @@ export default function () {
           tagsOne={o.tags[0]}
           tags={o.tags[2]}
           gender={o.gender}
+          handleClick={() => petRoute(o)}
         />
-      ))} */}
-      <Auth />
+      ))}
+      {/* <Auth />
       <Button text="Add data" onClick={addData} />
-      <Button text="Read data" onClick={readData} />
+      <Button text="Read data" onClick={readData} /> */}
     </>
   );
 }
