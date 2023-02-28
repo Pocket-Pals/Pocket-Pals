@@ -35,8 +35,7 @@ export default function Header({
         router.push('/tutorial')
     }
     const handleClickSearch = () => {
-        // router.push('/search')
-        alert("search for pets page")
+        router.push('/find')
     }
     return (
         <HeaderContainer>
