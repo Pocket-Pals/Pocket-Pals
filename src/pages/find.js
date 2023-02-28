@@ -7,7 +7,7 @@ import SearchBar from "src/components/SearchBar/SearchBar";
 
 const CardConatiner = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
   background-color: #f5f5f5;
   border-radius: 0.5rem;
@@ -24,6 +24,14 @@ const CardConatiner = styled.div`
   @media (max-width: 750px) {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  // display: flex;
+  // flex-wrap: wrap;
+  // // justify-content: center;
+  // // align-items: center;
+  // flex: 0 1 33.333333%;
+  // flex-direction: row;
+  // gap: 1rem;
 `;
 
 const Body = styled.div`
@@ -33,20 +41,28 @@ const Body = styled.div`
 `;
 
 export default function find() {
-  const [dogs, setDogs] = useState([]);
+  const [animals, setAnimals] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const [catVal, setCatVal] = useState("");
+  const [dogVal, setDogVal] = useState("");
 
-  const getDogs = async () => {
-    const response = await fetch("/api/petfinder/animals");
+  const getAnimalData = async () => {
+    // const animalData = [];
+
+    const response = await fetch(`/api/petfinder/animals?page=${page}`);
     const data = await response.json();
-    const dogData = data.animals.filter((animal) => animal.type === "Dog");
-    console.log(dogData);
-    // console.log(dogData[0].photos[0].medium);
-    setDogs(dogData);
+    const animalData = data.animals.filter(
+      (animal) =>
+        animal.type === "Dog" || animal.type === "Cat" || animal.type === "Bird"
+    );
+
+    console.log(animalData);
+    setAnimals(animalData);
   };
 
   useEffect(() => {
-    getDogs();
+    getAnimalData();
   }, []);
 
   const petRoute = (o) => {
@@ -56,21 +72,69 @@ export default function find() {
   const handleSearch = (query) => {
     setSearchQuery(query);
     console.log(searchQuery);
-    const filteredDogs = dogs.filter((dog) =>
-      dog.name.toLowerCase().includes(query.toLowerCase())
+    const filteredAnimals = animals.filter((animal) =>
+      animal.name.toLowerCase().includes(query.toLowerCase())
     );
-    setDogs(filteredDogs);
+    setAnimals(filteredAnimals);
 
     if (query === "") {
-      getDogs();
+      getAnimalData();
     }
   };
+
+  // const clearInput = (e) => {
+  //   e.preventDefault();
+  //   setCatVal("");
+  //   setDogVal("");
+  // };
+
+  // const handleRadioChange = (e) => {
+  //   setDogVal(e.target.value);
+  //   setCatVal(e.target.value);
+  // };
+
+  // const handleReset = () => {
+  //   setDogVal("");
+  //   setCatVal("");
+  // };
 
   return (
     <>
       <div>
         <Flex>
           <Sidebar />
+          {/* <div>
+            <form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div>
+                <input
+                  type="radio"
+                  name="Cat"
+                  value="Cat"
+                  checked={catVal === "Cat"}
+                  onChange={handleRadioChange}
+                />
+                <label for="Cat">Cat</label>
+              </div>
+
+              <div>
+                <input
+                  type="radio"
+                  name="Dog"
+                  value="Dog"
+                  checked={dogVal === "Dog"}
+                  onChange={handleRadioChange}
+                />
+                <label for="Dog">Dog</label>
+              </div>
+
+              <button onClick={handleReset}>Clear</button>
+            </form>
+          </div> */}
           <Body>
             <SearchBar
               handleValue={searchQuery}
@@ -78,13 +142,13 @@ export default function find() {
               handleClick={() => handleSearch(searchQuery)}
             />
             <CardConatiner>
-              {dogs &&
-                dogs.map((o, i) => (
+              {animals &&
+                animals.map((o, i) => (
                   <MyCard
                     key={i}
                     title={o.name}
-                    // image={o.primary_photo_cropped.full}
-                    // avatar={o.photos[0].medium}
+                    image={o.primary_photo_cropped?.full}
+                    avatar={o.photos[0]?.medium}
                     description={o.description}
                     breed={o.breeds.primary}
                     age={o.age}

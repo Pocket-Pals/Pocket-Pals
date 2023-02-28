@@ -5,14 +5,16 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const StyledCard = styled(Card)`
-  // max-width: 300px;
-  width: 100% !important;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
   border-radius: 10px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1, 0.8);
   transition: all 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
+  // max-width: 300px;
+  // width: 100% !important;
+  // margin: 0 auto;
   &:hover {
     translate-y: 5px;
   }
@@ -35,7 +37,7 @@ export default function MyCard({ ...props }) {
     handleClick,
   } = props;
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -63,7 +65,9 @@ export default function MyCard({ ...props }) {
         }
       >
         <Meta
-          avatar={<Avatar src={avatar || "https://placekitten.com/100"} />}
+          avatar={
+            <Avatar src={avatar || "/placeholders/placeholder-image.png"} />
+          }
           title={title || "Default Title"}
           description={trimmedDescription || "No description provided."}
         />
@@ -76,7 +80,7 @@ export default function MyCard({ ...props }) {
           </Parent>
           <Parent>
             <Child width="100%">
-              <p>{tagsOne || "NO TAGS"}</p>
+              <p>{tagsOne || "TAGS"}</p>
             </Child>
             <Child>
               <p>{age || "AGE"}</p>

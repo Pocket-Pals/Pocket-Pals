@@ -26,7 +26,7 @@ export default function SearchBar({
       <SearchContainer className="search-container">
         <Space direction="vertical">
           <Search
-            placeholder="Search for dogs"
+            placeholder="Search for pets"
             enterButton
             onChange={(e) => handleChange(e)}
             value={handleValue}
