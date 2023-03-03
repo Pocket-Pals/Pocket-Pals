@@ -30,40 +30,48 @@ const TutorialImage = styled(Image)`
 
 export function ImageDiv({
     img = "/svgs/livingroom_sunny.svg",
+    alt = "Tutorial"
 }) {
     const r = useRouter();
     let { page } = r.query;
     if (page === undefined) {
         page = 0;
         img = "/svgs/livingroom_sunny.svg"
+        alt = "Tutorial"
     }
     if (page === "1") {
         img = "/svgs/livingroom_sunny.svg"
+        alt = "Tutorial"
     }
     if (page === "2") {
         img = "/svgs/livingroom_bowls.svg"
+        alt = "Tutorial"
     }
     if (page === "3") {
         img = "/svgs/livingroom_sponge.svg"
+        alt = "Tutorial"
     }
     if (page === "4") {
         img = "/svgs/livingroom_shoe.svg"
+        alt = "Tutorial"
     }
     if (page === "5") {
         img = "/svgs/ran_away.svg"
+        alt = "Tutorial"
     }
     if (page === "6") {
         img = "/svgs/pet_ready.svg"
+        alt = "Tutorial"
     }
     return (
         <>
-            <Button text="Skip Tutorial"
+            <Button text="Skip" width="100px"
                 onClick={
                     () => r.push('/select')
 
                 }
             />
-            <TutorialImage src={img} width={400} height={400} />
+            <TutorialImage src={img} alt="Tutorial" width={600} height={400} priority />
         </>
     )
 }
@@ -104,7 +112,7 @@ export function TutorialDiv({
                 height="100%"
             />
             <ButtonDiv>
-                <Button text="Select Pocket Pal" type="primary" bgcolor="#333"
+                <Button text="Select Pocket Pal" type="primary" bgcolor="#F67837" hoverbgcolor="#AA4A19"
                     onClick={
                         () => r.push("/select")
                     } />
@@ -129,7 +137,7 @@ export function TutorialDiv({
                 height="100%"
             />
             <ButtonDiv>
-                <Button text="Back" type="secondary"
+                <Button text="Back" type="secondary" border="2px solid #F67837"
                     onClick={() => {
                         if (page === undefined || Number(page) === 0) {
                             r.push('/');
@@ -142,7 +150,7 @@ export function TutorialDiv({
                         }
                     }}
                 />
-                <Button text="Next" type="primary" bgcolor="#333"
+                <Button text="Next" type="primary" bgcolor="#F67837" hoverbgcolor="#AA4A19"
                     onClick={
                         () => r.replace({
                             query: {
