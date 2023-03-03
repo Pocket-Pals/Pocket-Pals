@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
+// import { Button } from 'antd'
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import data from '../../data/dogStats.json';
@@ -35,6 +36,8 @@ const DogImage = styled(Image)`
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    height: 350px;
+    width: 350px;
 `
 const StatsContainer = styled.div`
     width: 100%;
@@ -49,13 +52,16 @@ const StatUnfilled = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
+    // background-color: rgb(200, 200, 200); ishan fix this
+    width: 100px;
+    height: 15px;
     padding-top: 15px;
 `
 const StatFilled = styled.div`
     display: flex;
     width: ${(props) => props.width * 10}px;   
     height: 15px;
-    background-color: rgb(0, 150, 250);
+    background-color: #6D7CFF;
     border-radius: 10px;
     padding: 0;
     flex-direction: column;
@@ -79,7 +85,7 @@ export default function SelectCard({
 
     return (
         <>
-            <Button onClick={handleBackToTutorial} text="Back" />
+            <Button onClick={handleBackToTutorial} text="Back" width="100px" hoverbgcolor="#AA4A19" />
             <Typography
                 text="Select a Pocket Pal"
                 size="2rem"
@@ -108,7 +114,7 @@ export default function SelectCard({
                         width="100%"
                         height="100%"
                     />
-                    <DogImage src={easy} width={350} height={350} />
+                    <DogImage src={easy} width={350} height={350} alt="Easy Pocket Pal" priority />
                     <StatsContainer>
                         <div>
                             <Typography
@@ -179,7 +185,7 @@ export default function SelectCard({
                         width="100%"
                         height="100%"
                     />
-                    <DogImage src={medium} width={350} height={350} />
+                    <DogImage src={medium} width={350} height={350} alt="Medium Pocket Pal" priority />
                     <StatsContainer>
                         <div>
                             <Typography
@@ -234,7 +240,7 @@ export default function SelectCard({
                             </StatUnfilled>
                         </div>
                     </StatsContainer>
-                    <Button onClick={() => handleSelect("medium")} text="Select" />
+                    <Button onClick={() => handleSelect("medium")} text="Select" hoverbgcolor="#AA4A19" />
                 </DogCard>
                 <DogCard>
                     <Typography
@@ -250,7 +256,7 @@ export default function SelectCard({
                         width="100%"
                         height="100%"
                     />
-                    <DogImage src={hard} width={350} height={350} />
+                    <DogImage src={hard} width={350} height={350} alt="Hard Pocket Pal" priority />
                     <StatsContainer>
                         <div>
                             <Typography
@@ -305,7 +311,7 @@ export default function SelectCard({
                             </StatUnfilled>
                         </div>
                     </StatsContainer>
-                    <Button onClick={() => handleSelect("hard")} text="Select" />
+                    <Button onClick={() => handleSelect("hard")} text="Select" hoverbgcolor="#AA4A19" />
                 </DogCard>
             </DogCardContainers>
         </>

@@ -12,7 +12,7 @@ const HeaderContainer = styled.div`
     justify-content: center;
     align-items: center;
     `
-const Placeholder = styled(Image)`
+const Logo = styled(Image)`
     display: block;
     justify-content: center;
     align-items: center;
@@ -20,7 +20,7 @@ const Placeholder = styled(Image)`
     margin-top: 10px;
     margin-bottom:10px;
     width: 600px;
-    height: 300px;
+    height: 220px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -39,18 +39,18 @@ export default function Header({
     }
     return (
         <HeaderContainer>
-            <Placeholder src={img} width={600} height={600} />
+            <Logo src={img} alt="Logo" width={600} height={220} priority />
             <Typography
-                text="Practice makes perfect — raise a virtual Pocket Pal so you become prepared to raise a new pet"
-                size="18px"
-                color="#2F2F2F"
+                text="Raise a Pocket Pal or search for a real pet"
+                size="24px"
+                color="#AA4A19"
                 weight="regular"
                 family="sans-serif"
                 align="center"
                 display="block"
                 margin="20px"
-                padding="0"
-                width="28%"
+                padding="0px 0px 20px 0px"
+                width="50%"
                 height="100%"
             />
             <Button onClick={handleClickRaisePet} text="Raise Pocket Pal" />

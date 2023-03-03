@@ -3,11 +3,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Roboto", sans-serif;
-  background-color: #f5f5f5;
+  background-color: #fefaf6;
   scrollbar-width: none;
 }
 
-.search-container > div {
+.search-container>div {
   width: 100%;
   margin-bottom: 1rem;
 }
