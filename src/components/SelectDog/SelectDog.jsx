@@ -76,7 +76,7 @@ export default function SelectCard({
     const router = useRouter();
 
     const handleSelect = (difficulty) => {
-        alert(`selected ${difficulty} dog`);
+        alert(`routes to /game/${difficulty} `);
         // router.push(`/game/${difficulty}`);
     };
     const handleBackToTutorial = () => {
@@ -85,11 +85,11 @@ export default function SelectCard({
 
     return (
         <>
-            <Button onClick={handleBackToTutorial} text="Back" width="100px" hoverbgcolor="#AA4A19" />
+            <Button onClick={handleBackToTutorial} text="Back" width="100px" hoverbgcolor="#D96D36" />
             <Typography
                 text="Select a Pocket Pal"
                 size="2rem"
-                color="#2F2F2F"
+                color="#514EDB"
                 weight="600"
                 family="sans-serif"
                 align="center"
@@ -104,7 +104,7 @@ export default function SelectCard({
                     <Typography
                         text="Easy"
                         size="1.2rem"
-                        color="#2F2F2F"
+                        color="#514EDB"
                         weight="bold"
                         family="sans-serif"
                         align="center"
@@ -169,13 +169,13 @@ export default function SelectCard({
                             </StatUnfilled>
                         </div>
                     </StatsContainer>
-                    <Button onClick={() => handleSelect("easy")} text="Select" />
+                    <Button onClick={() => handleSelect("easy")} text="Select" hoverbgcolor="#D96D36" />
                 </DogCard>
                 <DogCard>
                     <Typography
                         text="Medium"
                         size="1.2rem"
-                        color="#2F2F2F"
+                        color="#514EDB"
                         weight="bold"
                         family="sans-serif"
                         align="center"
@@ -240,13 +240,13 @@ export default function SelectCard({
                             </StatUnfilled>
                         </div>
                     </StatsContainer>
-                    <Button onClick={() => handleSelect("medium")} text="Select" hoverbgcolor="#AA4A19" />
+                    <Button onClick={() => handleSelect("medium")} text="Select" hoverbgcolor="#D96D36" />
                 </DogCard>
                 <DogCard>
                     <Typography
                         text="Hard"
                         size="1.2rem"
-                        color="#2F2F2F"
+                        color="#514EDB"
                         weight="bold"
                         family="sans-serif"
                         align="center"
@@ -311,7 +311,7 @@ export default function SelectCard({
                             </StatUnfilled>
                         </div>
                     </StatsContainer>
-                    <Button onClick={() => handleSelect("hard")} text="Select" hoverbgcolor="#AA4A19" />
+                    <Button onClick={() => handleSelect("hard")} text="Select" hoverbgcolor="#D96D36" />
                 </DogCard>
             </DogCardContainers>
         </>

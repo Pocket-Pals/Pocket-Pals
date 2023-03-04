@@ -25,6 +25,14 @@ const Logo = styled(Image)`
     background-position: center;
     background-size: cover;
 `
+
+const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    & > button:first-child {
+        margin-bottom: 40px;
+      }
+`
 export default function Header({
     img = "/svgs/logo.svg"
 }) {
@@ -41,7 +49,7 @@ export default function Header({
         <HeaderContainer>
             <Logo src={img} alt="Logo" width={600} height={220} priority />
             <Typography
-                text="Raise a Pocket Pal or search for a real pet"
+                text="Raise a Pocket Pal or search for a Real Pet"
                 size="24px"
                 color="#AA4A19"
                 weight="regular"
@@ -53,8 +61,10 @@ export default function Header({
                 width="50%"
                 height="100%"
             />
-            <Button onClick={handleClickRaisePet} text="Raise Pocket Pal" />
-            <Button onClick={handleClickSearch} text="Search for a Real Pet" />
+            <ButtonContainer>
+                <Button onClick={handleClickRaisePet} text="Raise Pocket Pal" />
+                <Button onClick={handleClickSearch} text="Search for a Real Pet" type="secondary" border="2px solid #F67837" />
+            </ButtonContainer>
 
         </HeaderContainer>
     )
