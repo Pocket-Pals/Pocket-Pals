@@ -6,11 +6,12 @@ const StyledButton = styled(Button)`
   color: ${(props) => props.color || 'white'};
   background-color: ${(props) => props.bgcolor || '#F67837'};
   border: ${(props) => props.border || null};
-  height: 40px;
-  border-radius: 15px;
+  height: 60px;
+  font-size: 18px;
+  border-radius: 20px;
   padding: ${(props) => props.padding || "0px"};
   &:hover {
-    background-color: ${(props) => props.hoverbgcolor || '#AA4A19'};
+    background-color: ${(props) => props.hoverbgcolor || '#D96D36'} !important;
     color: ${(props) => props.hovercolor || 'white'};
   }
   &.ant-btn-secondary {
@@ -34,7 +35,7 @@ export default function MyButton({ text, onClick = () => { }, padding, icon, typ
         bgcolor={bgColor || '#F67837'}
         width={width || "240px"}
         padding={padding || "0px"}
-        hoverbgcolor={hoverbgcolor || '#AA4A19'}
+        hoverbgcolor={hoverbgcolor || '#D96D36'}
         hovercolor={hovercolor || 'white'}
         secondarybgcolor={secondarybgcolor || 'white'}
         secondarycolor={secondarycolor || '#F67837'}
