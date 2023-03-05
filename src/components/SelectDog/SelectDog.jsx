@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Typography from '../Typography/Typography';
 import Button from '../Button/Button';
-// import { Button } from 'antd'
+import { Progress, Grid } from '@nextui-org/react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import data from '../../data/dogStats.json';
@@ -46,26 +46,6 @@ const StatsContainer = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
         "a b";    
-`
-
-const StatUnfilled = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    // background-color: rgb(200, 200, 200); ishan fix this
-    width: 100px;
-    height: 15px;
-    padding-top: 15px;
-`
-const StatFilled = styled.div`
-    display: flex;
-    width: ${(props) => props.width * 10}px;   
-    height: 15px;
-    background-color: #6D7CFF;
-    border-radius: 10px;
-    padding: 0;
-    flex-direction: column;
-    justify-content: space-between;
 `
 
 export default function SelectCard({
@@ -158,15 +138,17 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            <StatUnfilled>
-                                <StatFilled width={data[0].barkLevel} />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled width={data[0].social} />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled width={data[0].energy} />
-                            </StatUnfilled>
+                            <Grid.Container xs={12} sm={20} gap={1.4}>
+                                <Grid>
+                                    <Progress color="warning" value={data[0].barkLevel * 10} />
+                                </Grid>
+                                <Grid>
+                                    <Progress color="warning" value={data[0].social * 10} />
+                                </Grid>
+                                <Grid>
+                                    <Progress color="warning" value={data[0].energy * 10} />
+                                </Grid>
+                            </Grid.Container>
                         </div>
                     </StatsContainer>
                     <Button onClick={() => handleSelect("easy")} text="Select" hoverbgcolor="#D96D36" />
@@ -229,15 +211,17 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            <StatUnfilled>
-                                <StatFilled width={data[1].barkLevel} />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled width={data[1].social} />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled width={data[1].energy} />
-                            </StatUnfilled>
+                            <Grid.Container xs={12} sm={20} gap={1.4}>
+                                <Grid>
+                                    <Progress color="warning" value={data[1].barkLevel * 10} />
+                                </Grid>
+                                <Grid>
+                                    <Progress color="warning" value={data[1].social * 10} />
+                                </Grid>
+                                <Grid>
+                                    <Progress color="warning" value={data[1].energy * 10} />
+                                </Grid>
+                            </Grid.Container>
                         </div>
                     </StatsContainer>
                     <Button onClick={() => handleSelect("medium")} text="Select" hoverbgcolor="#D96D36" />
@@ -300,15 +284,17 @@ export default function SelectCard({
                             />
                         </div>
                         <div>
-                            <StatUnfilled>
-                                <StatFilled width={data[2].barkLevel} />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled width={data[2].social} />
-                            </StatUnfilled>
-                            <StatUnfilled>
-                                <StatFilled width={data[2].energy} />
-                            </StatUnfilled>
+                            <Grid.Container xs={12} sm={20} gap={1.4}>
+                                <Grid>
+                                    <Progress color="warning" value={data[2].barkLevel * 10} />
+                                </Grid>
+                                <Grid>
+                                    <Progress color="warning" value={data[2].social * 10} />
+                                </Grid>
+                                <Grid>
+                                    <Progress color="warning" value={data[2].energy * 10} />
+                                </Grid>
+                            </Grid.Container>
                         </div>
                     </StatsContainer>
                     <Button onClick={() => handleSelect("hard")} text="Select" hoverbgcolor="#D96D36" />
