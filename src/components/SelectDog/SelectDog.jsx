@@ -43,7 +43,7 @@ const StatsContainer = styled.div`
     width: 100%;
     padding-bottom: 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1.5fr;
     grid-template-areas:
         "a b";    
 `
