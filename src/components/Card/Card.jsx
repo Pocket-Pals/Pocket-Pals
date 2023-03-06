@@ -3,6 +3,7 @@ import { GrandParent, Parent, Child } from "src/styles/styles";
 import Button from "../Button/Button";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Image from "next/image";
 
 const StyledCard = styled(Card)`
   display: flex;
@@ -18,6 +19,11 @@ const StyledCard = styled(Card)`
   &:hover {
     translate-y: 5px;
   }
+`;
+
+const mainImage = styled.img`
+  width: 100%;
+  max-height: 300px;
 `;
 
 const { Meta } = Card;
@@ -58,9 +64,11 @@ export default function MyCard({ ...props }) {
       <StyledCard
         loading={loading}
         cover={
-          <img
-            alt="card cover"
+          <Image
             src={image || "/placeholders/placeholder-image.png"}
+            alt="card cover"
+            width={300}
+            height={250}
           />
         }
       >

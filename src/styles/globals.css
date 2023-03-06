@@ -7,7 +7,11 @@ body {
   scrollbar-width: none;
 }
 
-.search-container>div {
+.search-container > div {
   width: 100%;
   margin-bottom: 1rem;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
