@@ -46,6 +46,7 @@ export default function Game(){
     this.load.image('wall', '/assets/env/wall.png')
     this.load.image('platform', '/assets/env/platform.png')
     this.load.image('door', 'assets/env/door.png')
+    this.load.image('sponge', 'assets/items/sponge.png')
     this.load.spritesheet('player', 
       '/assets/character/spritesheet1.png',
       { frameWidth: 344, frameHeight: 369 }
@@ -71,17 +72,13 @@ export default function Game(){
     this.add.image(419.5, 280, 'ground')
     this.add.image(150, 215, 'door')
     platforms.create(400, 600, 'platform')
-
+    player = this.physics.add.sprite(150, 100, 'player').setScale(0.4).setCrop(0, 0, 400, 600)
+    let sponge = this.physics.add.image(200, 200, 'sponge')
+    
     // platforms.create(600, 400, 'ground')
     // platforms.create(50, 250, 'ground')
     // platforms.create(750, 220, 'ground')
-
-    player = this.physics.add.sprite(150, 100, 'player').setScale(0.4).setCrop(0, 0, 400, 600)
     
-
-    player.setBounce(0.2)
-    player.setCollideWorldBounds(true)
-  
     this.anims.create({
       key: 'left',
       frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3}),
@@ -101,6 +98,29 @@ export default function Game(){
       frameRate: 10,
       repeat: -1
     })
+    
+    //bounce for objects
+    player.setBounce(0.2)
+    player.setCollideWorldBounds(true)
+    sponge.setCollideWorldBounds(true)
+    sponge.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
+    sponge.setVelocity(100, 100)
+
+
+    //events
+    this.input.setDraggable(sponge.setInteractive())
+    this.input.on('dragstart', function (pointer, obj){
+        obj.body.moves = false;
+    })
+
+    this.input.on('drag', function (pointer, obj, dragX, dragY){
+        obj.setPosition(dragX, dragY);
+    });
+
+    this.input.on('dragend', function (pointer, obj){
+        obj.body.moves = true;
+    })
+    
 
     
     stars = this.physics.add.group({
@@ -121,6 +141,7 @@ export default function Game(){
     this.physics.add.collider(player, platforms)
     this.physics.add.collider(stars, platforms)
     this.physics.add.overlap(player, stars, collectStar, null, this)
+    this.physics.add.collider(sponge, platforms)
 
     function collectStar (player, star) {
 
