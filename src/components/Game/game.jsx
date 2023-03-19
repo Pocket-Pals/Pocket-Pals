@@ -8,8 +8,8 @@ export default function Game(){
 
   let config = {
     type: Phaser.AUTO,
-    width: 1920,
-    height: 1080,
+    width: 800,
+    height: 600,
     physics: {
       default: 'arcade',
       arcade: {
@@ -42,7 +42,10 @@ export default function Game(){
   function preload (){
     this.load.image('sky', '/assets/bg/sky.png')
     this.load.image('star', '/assets/items/star.png')
-    this.load.image('ground', '/assets/items/ground.png')
+    this.load.image('ground', '/assets/env/floor.png')
+    this.load.image('wall', '/assets/env/wall.png')
+    this.load.image('platform', '/assets/env/platform.png')
+    this.load.image('door', 'assets/env/door.png')
     this.load.spritesheet('player', 
       '/assets/character/spritesheet1.png',
       { frameWidth: 344, frameHeight: 369 }
@@ -62,11 +65,16 @@ export default function Game(){
 
     platforms = this.physics.add.staticGroup()
 
-    platforms.create(400, 568, 'ground').setScale(1).refreshBody()
+    // platforms.create(419.5, 400, 'ground').setScale(1).refreshBody()
 
-    platforms.create(600, 400, 'ground')
-    platforms.create(50, 250, 'ground')
-    platforms.create(750, 220, 'ground')
+    this.add.image(400, 280, 'wall')
+    this.add.image(419.5, 280, 'ground')
+    this.add.image(150, 215, 'door')
+    platforms.create(400, 600, 'platform')
+
+    // platforms.create(600, 400, 'ground')
+    // platforms.create(50, 250, 'ground')
+    // platforms.create(750, 220, 'ground')
 
     player = this.physics.add.sprite(150, 100, 'player').setScale(0.4).setCrop(0, 0, 400, 600)
     
