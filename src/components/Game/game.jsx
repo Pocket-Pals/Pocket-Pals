@@ -47,6 +47,7 @@ export default function Game(){
     this.load.image('platform', '/assets/env/platform.png')
     this.load.image('door', 'assets/env/door.png')
     this.load.image('sponge', 'assets/items/sponge.png')
+    this.load.image('bowl', '/assets/items/bowl.png')
     this.load.spritesheet('player', 
       '/assets/character/spritesheet1.png',
       { frameWidth: 344, frameHeight: 369 }
@@ -59,6 +60,8 @@ export default function Game(){
   let stars
   let score = 0
   let scoreText
+  let bowlText
+  let hunger = 100
 
   function create (){
     this.add.image(400, 300, 'sky')
@@ -73,6 +76,7 @@ export default function Game(){
     this.add.image(150, 215, 'door')
     platforms.create(400, 600, 'platform')
     player = this.physics.add.sprite(150, 100, 'player').setScale(0.4).setCrop(0, 0, 400, 600)
+    let bowl = this.physics.add.image(500, 100, 'bowl')
     let sponge = this.physics.add.image(200, 200, 'sponge')
     
     // platforms.create(600, 400, 'ground')
@@ -103,6 +107,7 @@ export default function Game(){
     player.setBounce(0.2)
     player.setCollideWorldBounds(true)
     sponge.setCollideWorldBounds(true)
+    bowl.setCollideWorldBounds(true)
     sponge.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
     sponge.setVelocity(100, 100)
 
@@ -136,12 +141,24 @@ export default function Game(){
     })
 
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' })
+    bowlText = this.add.text(16, 64, `hunger: ${hunger}`, { fontSize: '32px', fill: '#000' })
 
     //physics
     this.physics.add.collider(player, platforms)
     this.physics.add.collider(stars, platforms)
     this.physics.add.overlap(player, stars, collectStar, null, this)
     this.physics.add.collider(sponge, platforms)
+    this.physics.add.collider(bowl, platforms)
+    this.physics.add.collider(bowl, player, hitBowl)
+    
+    function hitBowl(){
+
+      if (hunger > 0){
+        hunger -= 1
+        bowlText.setText('hunger: ' + hunger) 
+      }
+      
+    }
 
     function collectStar (player, star) {
 
