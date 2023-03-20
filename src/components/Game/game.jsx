@@ -15,16 +15,12 @@ export default function Game(){
   let bowlText
   let hunger = 100
 
+  class sceneA extends Phaser.Scene {
+    constructor(){
+      super({ key: 'sceneA'})
+    }
 
-  let sceneA = new Phaser.Class({
-
-    Extends: Phaser.Scene,
-
-    initialize: function sceneA(){
-      Phaser.Scene.call(this, {key: 'sceneA'})
-    },
-
-    preload: function(){
+    preload(){
       this.load.image('sky', '/assets/bg/sky.png')
       this.load.image('star', '/assets/items/star.png')
       this.load.image('ground', '/assets/env/floor.png')
@@ -38,12 +34,9 @@ export default function Game(){
         '/assets/character/spritesheet1.png',
         { frameWidth: 344, frameHeight: 369 }
         )
-    },
+    }
 
-    create: function(){
-
-
-
+    create(){
       this.add.image(400, 300, 'sky')
       // this.add.image(400, 300, 'star')
   
@@ -53,7 +46,7 @@ export default function Game(){
   
       this.add.image(400, 280, 'wall')
       this.add.image(419.5, 280, 'ground')
-      this.add.image(150, 215, 'door')
+      let door = this.add.image(150, 215, 'door')
       platforms.create(400, 600, 'platform')
       player = this.physics.add.sprite(150, 100, 'player').setScale(0.4).setCrop(0, 0, 400, 600)
       let bowl = this.physics.add.image(500, 600, 'bowl')
@@ -153,9 +146,9 @@ export default function Game(){
   
         star.disableBody(true, true)
       }
-    },
+    }
 
-    update: function(){
+    update(){
       let cursors = this.input.keyboard.createCursorKeys()
 
       if (cursors.left.isDown) {
@@ -171,7 +164,8 @@ export default function Game(){
           player.setVelocityY(-330)
       }
     }
-  })
+
+  }
 
   let config = {
     type: Phaser.AUTO,
