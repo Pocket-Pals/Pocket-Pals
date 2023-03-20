@@ -30,6 +30,7 @@ export default function Game(){
       this.load.image('sponge', 'assets/items/sponge.png')
       this.load.image('bowl', '/assets/items/bowl.png')
       this.load.image('water', '/assets/items/water.png')
+      this.load.image('bubble', '/assets/items/bubble.png')
       this.load.spritesheet('player', 
         '/assets/character/spritesheet1.png',
         { frameWidth: 344, frameHeight: 369 }
@@ -46,12 +47,14 @@ export default function Game(){
   
       this.add.image(400, 280, 'wall')
       this.add.image(419.5, 280, 'ground')
-      let door = this.add.image(150, 215, 'door')
+      let door = this.add.image(150, 215, 'door').setInteractive()
       platforms.create(400, 600, 'platform')
       player = this.physics.add.sprite(150, 100, 'player').setScale(0.4).setCrop(0, 0, 400, 600)
       let bowl = this.physics.add.image(500, 600, 'bowl')
       let sponge = this.physics.add.image(200, 600, 'sponge')
       let water = this.physics.add.image(300, 600, 'water')
+      let bubbles = this.add.particles('bubble')
+      
       
       // platforms.create(600, 400, 'ground')
       // platforms.create(50, 250, 'ground')
@@ -76,6 +79,20 @@ export default function Game(){
         frameRate: 10,
         repeat: -1
       })
+
+      let particleConfig = {
+        speed: 200,
+        lifespan: 500,
+        blendMode: 'ADD',
+        maxParticles: 50,
+        scale: {
+          start: 1,
+          end: 0
+        },
+        on: false
+      }
+
+      let bubbleParticles = bubbles.createEmitter(particleConfig)
       
       //bounce for objects
       player.setBounce(0.2)
@@ -103,8 +120,43 @@ export default function Game(){
           obj.body.moves = true;
       })
       
-  
+      bowl.on('pointerover', function(){
+        bowl.setTint(0x44ff44)
+      })
+
+      bowl.on('pointerout', function(){
+        bowl.clearTint()
+      })
+
+      door.on('pointerover', function(){
+        door.setTint(0x44ff44)
+      })
       
+      door.on('pointerout', function(){
+        door.clearTint()
+      })
+      
+      water.on('pointerover', function(){
+        water.setTint(0x44ff44)
+      })
+      
+      water.on('pointerout', function(){
+        water.clearTint()
+      })
+
+      sponge.on('pointerover', function(){
+        sponge.setTint(0x44ff44)
+      })
+      
+      sponge.on('pointerout', function(){
+        sponge.clearTint()
+      })
+
+      sponge.on('pointerdown', function(){
+        sponge.clearTint()
+      })
+
+
       stars = this.physics.add.group({
         key: 'star',
         repeat: 11,
@@ -129,6 +181,7 @@ export default function Game(){
       this.physics.add.collider(bowl, platforms)
       this.physics.add.overlap(bowl, player, hitBowl, null, this)
       this.physics.add.collider(water, platforms)
+      this.physics.add.collider(player, sponge, cleanPlayer, null, this)
       
       function hitBowl(){
   
@@ -146,7 +199,14 @@ export default function Game(){
   
         star.disableBody(true, true)
       }
+
+      function cleanPlayer(player){
+        bubbleParticles.emitParticleAt(player.x, player.y)
+      }
+
     }
+
+    
 
     update(){
       let cursors = this.input.keyboard.createCursorKeys()
