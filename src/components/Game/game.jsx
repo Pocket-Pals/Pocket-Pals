@@ -135,6 +135,10 @@ export default function Game(){
       door.on('pointerout', function(){
         door.clearTint()
       })
+
+      door.once('pointerdown', function(event){
+        this.scene.start('sceneB')
+      }, this)
       
       water.on('pointerover', function(){
         water.setTint(0x44ff44)
@@ -155,6 +159,7 @@ export default function Game(){
       sponge.on('pointerdown', function(){
         sponge.clearTint()
       })
+
 
 
       stars = this.physics.add.group({
@@ -224,6 +229,153 @@ export default function Game(){
           player.setVelocityY(-330)
       }
     }
+    
+
+  }
+
+  class sceneB extends Phaser.Scene {
+    constructor(){
+      super({key: 'sceneB'})
+    }
+
+    preload(){
+
+      this.load.spritesheet('player', 
+      '/assets/character/spritesheet1.png',
+      { frameWidth: 344, frameHeight: 369 }
+      )
+      this.load.image('grass', '/assets/bg/grass.png')
+      this.load.image('platform', '/assets/bg/hiddenPlatform.png')
+      this.load.image('sky', '/assets/bg/sky.png')
+      this.load.image('tree1', '/assets/env/tree1.png')
+      this.load.image('tree2', '/assets/env/tree2.png')
+      this.load.image('tree3', '/assets/env/tree3.png')
+      this.load.image('tree4', '/assets/env/tree4.png')
+    }
+
+    create(){
+      player = this.physics.add.sprite(150, 100, 'player')
+        .setScale(0.4).setCrop(0, 0, 400, 600)
+        .setCollideWorldBounds(true)
+        .setBounce(0.2)
+        .setDepth(3)
+
+      this.add.image(0, 600, 'grass')
+        .setDepth(2)
+      
+      this.add.image(600, 600, 'grass')
+        .setDepth(2)
+
+      let trees = this.physics.add.staticGroup()
+
+      this.add.image(0, 300, 'sky')
+      this.add.image(600, 300, 'sky')
+
+      trees
+      .create(200, 400, 'tree1')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(400, 400, 'tree2')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(600, 400, 'tree3')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(800, 400, 'tree4')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(300, 400, 'tree3')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(500, 400, 'tree2')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(700, 400, 'tree3')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(900, 400, 'tree2')
+      .setScale(0.5)
+      .setDepth(2)
+      
+      trees
+      .create(1100, 400, 'tree2')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(1000, 400, 'tree2')
+      .setScale(0.5)
+      .setDepth(2)
+
+      trees
+      .create(100, 400, 'tree2')
+      .setScale(0.5)
+      .setDepth(2)
+
+
+      // this.add.image(200, 400, 'tree1')
+
+      platforms = this.physics.add.staticGroup()
+        .create(400, 620, 'platform')
+
+      this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3}),
+        frameRate: 10,
+        repeat: -1
+      })
+  
+      this.anims.create({
+        key: 'turn',
+        frames: [ { key: 'player', frame: 4 } ],
+        frameRate: 20
+      })
+  
+      this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('player', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+      })
+
+      this.cameras.main.setBounds(0, 0, 600 * 2, 600)
+      this.physics.world.setBounds(0, 0, 600 * 2, 600)
+      this.cameras.main.startFollow(player, true, 0.05, 0)
+      this.cameras.main.followOffset.set(0, 0)
+      this.physics.add.collider(player, platforms)
+    }
+
+
+    update(){
+      let cursors = this.input.keyboard.createCursorKeys()
+
+      if (cursors.left.isDown) {
+        player.setVelocityX(-160)
+        player.anims.play('left', true)
+      } else if (cursors.right.isDown) {
+        player.setVelocityX(160)
+        player.anims.play('right', true)
+      } else {
+        player.setVelocityX(0)
+        player.anims.play('turn')
+      } if (cursors.up.isDown && player.body.touching.down) {
+          player.setVelocityY(-330)
+      }
+    }
 
   }
 
@@ -240,7 +392,7 @@ export default function Game(){
         debug: false
       }
     },
-    scene: [sceneA]
+    scene: [sceneB]
   }
 
   useEffect(() => {
