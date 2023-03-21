@@ -8,6 +8,7 @@ export default function Game(){
 
 
   let platforms
+  let grass
   let player
   let stars
   let score = 0
@@ -245,16 +246,19 @@ export default function Game(){
       { frameWidth: 344, frameHeight: 369 }
       )
       this.load.image('grass', '/assets/bg/grass.png')
-      this.load.image('platform', '/assets/bg/hiddenPlatform.png')
+      this.load.image('fakeGrass', '/assets/bg/hiddenPlatform.png')
       this.load.image('sky', '/assets/bg/sky.png')
       this.load.image('tree1', '/assets/env/tree1.png')
       this.load.image('tree2', '/assets/env/tree2.png')
       this.load.image('tree3', '/assets/env/tree3.png')
       this.load.image('tree4', '/assets/env/tree4.png')
+      this.load.image('twig1', '/assets/items/twig1.png')
+      this.load.image('twig2', '/assets/items/twig2.png')
+      this.load.image('twig3', '/assets/items/twig3.png')
     }
 
     create(){
-      player = this.physics.add.sprite(150, 100, 'player')
+      player = this.physics.add.sprite(150, 450, 'player')
         .setScale(0.4).setCrop(0, 0, 400, 600)
         .setCollideWorldBounds(true)
         .setBounce(0.2)
@@ -268,69 +272,66 @@ export default function Game(){
 
       let trees = this.physics.add.staticGroup()
 
+      for (let i = 0; i < 10; i++ ){
+
+        let treeTypes = ['tree1', 'tree2', 'tree3', 'tree4']
+
+        let treeIndex = Phaser.Math.RND.between(0, treeTypes.length -1)
+
+        let treeType = treeTypes[treeIndex]
+
+        trees
+        .create(20 + i * 150, 400, treeType)
+        .setScale(0.5)
+        .setDepth(2)
+      }
+
       this.add.image(0, 300, 'sky')
       this.add.image(600, 300, 'sky')
 
-      trees
-      .create(200, 400, 'tree1')
-      .setScale(0.5)
-      .setDepth(2)
+      let twigGroup = this.physics.add.group()
 
-      trees
-      .create(400, 400, 'tree2')
-      .setScale(0.5)
-      .setDepth(2)
+      function dropTwig(){
+        let numTwigs = twigGroup.getLength()
+        let twigTypes = ['twig1', 'twig2', 'twig3']
+        let twigIndex = Phaser.Math.RND.between(0, twigTypes.length - 1)
+        let twigType = twigTypes[twigIndex]
 
-      trees
-      .create(600, 400, 'tree3')
-      .setScale(0.5)
-      .setDepth(2)
+        if (numTwigs >= 15){
+          let oldestTwig = twigGroup.getFirst(true)
 
-      trees
-      .create(800, 400, 'tree4')
-      .setScale(0.5)
-      .setDepth(2)
+          if (oldestTwig){
+            oldestTwig.destroy()
+          }
+        }
 
-      trees
-      .create(300, 400, 'tree3')
-      .setScale(0.5)
-      .setDepth(2)
+        let dropX = Phaser.Math.RND.between(0, 1200)
+        let dropY = 0
+        let rotation = Phaser.Math.RND.between(0, 360)
 
-      trees
-      .create(500, 400, 'tree2')
-      .setScale(0.5)
-      .setDepth(2)
+        let twig = twigGroup.create(dropX, dropY, twigType)
 
-      trees
-      .create(700, 400, 'tree3')
-      .setScale(0.5)
-      .setDepth(2)
+        twig.setCollideWorldBounds(true)
+        twig.setBounce(0.2)
+        twig.setVelocityY(Phaser.Math.RND.between(100, 200))
+        twig.setDepth(2)
+        twig.setScale(0.3)
+        twig.setRotation(rotation)
+      }
 
-      trees
-      .create(900, 400, 'tree2')
-      .setScale(0.5)
-      .setDepth(2)
-      
-      trees
-      .create(1100, 400, 'tree2')
-      .setScale(0.5)
-      .setDepth(2)
+      function hitTwig(player, twig){
+        twig.destroy()
+      }
 
-      trees
-      .create(1000, 400, 'tree2')
-      .setScale(0.5)
-      .setDepth(2)
-
-      trees
-      .create(100, 400, 'tree2')
-      .setScale(0.5)
-      .setDepth(2)
+      this.time.addEvent({
+        delay: 5000,
+        callback: dropTwig,
+        loop: true
+      })
 
 
-      // this.add.image(200, 400, 'tree1')
-
-      platforms = this.physics.add.staticGroup()
-        .create(400, 620, 'platform')
+      grass = this.physics.add.staticGroup()
+        .create(400, 620, 'fakeGrass')
 
       this.anims.create({
         key: 'left',
@@ -356,7 +357,9 @@ export default function Game(){
       this.physics.world.setBounds(0, 0, 600 * 2, 600)
       this.cameras.main.startFollow(player, true, 0.05, 0)
       this.cameras.main.followOffset.set(0, 0)
-      this.physics.add.collider(player, platforms)
+      this.physics.add.collider(player, grass)
+      this.physics.add.collider(twigGroup, grass)
+      this.physics.add.overlap(player, twigGroup, hitTwig, null, this)
     }
 
 
