@@ -19,12 +19,13 @@ export const Parent = styled.div`
 export const Child = styled.div`
   display: flex;
   align-items: center;
-  background-color: #f0f2f5;
+  background-color: ${(props) => props.backgroundColor || "#f0f2f5"};
   padding: 0.1rem 0.8rem;
   border-radius: 0.3rem;
   width: ${(props) => props.width || "auto"};
   justify-content: center;
   font-size: 0.8rem;
+  gap: ${(props) => props.gap || "0"};
 `;
 
 export const Type = styled(Typography.Text)`
@@ -47,4 +48,36 @@ export const Flex = styled.div`
 export const FullContainer = styled.div`
   width: ${(props) => props.width || "100vw"};
   height: ${(props) => props.height || "100vh"};
+`;
+
+export const Container = styled.div`
+  display: ${(props) => props.display || "flex"};
+  flex-direction: ${(props) => props.flexDirection || "row"};
+  justify-content: ${(props) => props.justifyContent || "flex-start"};
+  align-items: ${(props) => props.alignItems || "flex-start"};
+  gap: ${(props) => props.gap || "0"};
+  width: ${(props) => props.width || "auto"};
+  height: ${(props) => props.height || "auto"};
+  padding: ${(props) => props.padding || "0"};
+  margin: ${(props) => props.margin || "0"};
+  max-width: ${(props) => props.maxWidth || "none"};
+  @media (max-width: 1025px) {
+    flex-direction: ${(props) => props.flexDirectionMobile || "column"};
+    padding: ${(props) => props.paddingMobile || "0"};
+    margin: ${(props) => props.marginMobile || "0"};
+    align-items: ${(props) => props.alignItemsMobile || "center"};
+    justify-content: ${(props) => props.justifyContentMobile || "center"};
+    gap: ${(props) => props.gapMobile || "0"};
+  }
+`;
+
+export const Ul = styled.ul`
+  display: ${(props) => props.display || "flex"};
+  flex-direction: ${(props) => props.flexDirection || "row"};
+  gap: ${(props) => props.gap || "0"};
+  padding: ${(props) => props.padding || "0"};
+`;
+
+export const Li = styled.li`
+  list-style: none;
 `;

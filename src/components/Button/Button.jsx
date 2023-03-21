@@ -16,10 +16,12 @@ const StyledButton = styled(Button)`
     background-color: ${(props) => props.secondarybgcolor || "white"};
     color: ${(props) => props.secondarycolor || "#F67837"};
     &:hover {
-      background-color: ${(props) => props.secondaryhoverbgcolor || "#D4A017"};
+      background-color: ${(props) =>
+        props.secondaryhoverbgcolor || "#FFD9C5"} !important;
       color: ${(props) => props.secondaryhovercolor || "white"};
       border: 2px solid #F67837;
     }
+    box-shadow: 0px 0px 0px 0px;
 `;
 
 export default function MyButton({
@@ -51,8 +53,8 @@ export default function MyButton({
         hovercolor={hovercolor || "white"}
         secondarybgcolor={secondarybgcolor || "white"}
         secondarycolor={secondarycolor || "#F67837"}
-        secondaryhoverbgcolor={secondaryhoverbgcolor || "#FFD9C5"}
-        secondaryhovercolor={secondaryhovercolor || "#F67837"}
+        secondaryhoverbgcolor={secondaryhoverbgcolor || "#f67837"} // light orange for transparent button hover
+        secondaryhovercolor={secondaryhovercolor || "#fff"}
         border={border || null}
       >
         {text || "Button"}

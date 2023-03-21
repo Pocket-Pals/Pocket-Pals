@@ -41,6 +41,7 @@ export default function MyCard({ ...props }) {
     tags,
     tagsOne,
     handleClick,
+    handleCardClick,
   } = props;
 
   const [loading, setLoading] = useState(false);
@@ -109,6 +110,7 @@ export default function MyCard({ ...props }) {
             </Child>
           </Parent>
           <Button text="Adopt Me" onClick={handleClick} />
+          <Button text="View details" onClick={handleCardClick} />
         </GrandParent>
       </StyledCard>
     </>

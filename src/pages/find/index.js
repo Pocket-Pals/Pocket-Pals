@@ -4,6 +4,7 @@ import Sidebar from "src/components/Sidebar/Sidebar";
 import { Flex } from "src/styles/styles";
 import styled from "styled-components";
 import SearchBar from "src/components/SearchBar/SearchBar";
+import { useRouter } from "next/router";
 
 const CardConatiner = styled.div`
   display: grid;
@@ -41,15 +42,13 @@ const Body = styled.div`
 `;
 
 export default function find() {
+  const router = useRouter();
+
   const [animals, setAnimals] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
-  const [catVal, setCatVal] = useState("");
-  const [dogVal, setDogVal] = useState("");
 
   const getAnimalData = async () => {
-    // const animalData = [];
-
     const response = await fetch(`/api/petfinder/animals?page=${page}`);
     const data = await response.json();
     const animalData = data.animals.filter(
@@ -82,59 +81,12 @@ export default function find() {
     }
   };
 
-  // const clearInput = (e) => {
-  //   e.preventDefault();
-  //   setCatVal("");
-  //   setDogVal("");
-  // };
-
-  // const handleRadioChange = (e) => {
-  //   setDogVal(e.target.value);
-  //   setCatVal(e.target.value);
-  // };
-
-  // const handleReset = () => {
-  //   setDogVal("");
-  //   setCatVal("");
-  // };
-
   return (
     <>
       <div>
         <Flex>
-          <Sidebar />
-          {/* <div>
-            <form
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <div>
-                <input
-                  type="radio"
-                  name="Cat"
-                  value="Cat"
-                  checked={catVal === "Cat"}
-                  onChange={handleRadioChange}
-                />
-                <label for="Cat">Cat</label>
-              </div>
+          {/* <Sidebar /> */}
 
-              <div>
-                <input
-                  type="radio"
-                  name="Dog"
-                  value="Dog"
-                  checked={dogVal === "Dog"}
-                  onChange={handleRadioChange}
-                />
-                <label for="Dog">Dog</label>
-              </div>
-
-              <button onClick={handleReset}>Clear</button>
-            </form>
-          </div> */}
           <Body>
             <SearchBar
               handleValue={searchQuery}
@@ -160,6 +112,7 @@ export default function find() {
                     tags={o.tags[2]}
                     gender={o.gender}
                     handleClick={() => petRoute(o)}
+                    handleCardClick={() => router.push(`/find/${o.id}`)}
                   />
                 ))}{" "}
             </CardConatiner>
