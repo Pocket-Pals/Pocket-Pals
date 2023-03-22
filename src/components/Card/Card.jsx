@@ -42,15 +42,16 @@ export default function MyCard({ ...props }) {
     tagsOne,
     handleClick,
     handleCardClick,
+    loading,
   } = props;
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  });
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
+  // });
 
   let trimmedDescription = description;
   if (description) {
@@ -110,7 +111,12 @@ export default function MyCard({ ...props }) {
             </Child>
           </Parent>
           <Button text="Adopt Me" onClick={handleClick} />
-          <Button text="View details" onClick={handleCardClick} />
+          <Button
+            type="secondary"
+            text="View details"
+            onClick={handleCardClick}
+            border="2px solid #F67837"
+          />
         </GrandParent>
       </StyledCard>
     </>

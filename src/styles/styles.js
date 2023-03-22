@@ -20,7 +20,7 @@ export const Child = styled.div`
   display: flex;
   align-items: center;
   background-color: ${(props) => props.backgroundColor || "#f0f2f5"};
-  padding: 0.1rem 0.8rem;
+  padding: ${(props) => props.padding || "0.1rem 0.8rem"};
   border-radius: 0.3rem;
   width: ${(props) => props.width || "auto"};
   justify-content: center;
@@ -80,4 +80,31 @@ export const Ul = styled.ul`
 
 export const Li = styled.li`
   list-style: none;
+`;
+
+export const CardConatiner = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  width: 100%;
+  @media (max-width: 1593px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 1323px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 1025px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 750px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+export const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 `;

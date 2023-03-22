@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { Child, Container, Li, Type, Ul } from "src/styles/styles";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
+import { getToken } from "src/server/petfinder-auth";
+import { Lottie } from "lottie-react";
 
 const StyledImg = styled(Image)`
   border-radius: 0.5rem;
@@ -13,7 +13,6 @@ export default function handler({ animalData }) {
   console.log(animalData);
   const typeList = ["Type", "Status", "Size", "Breed", "Age", "Gender"];
   const router = useRouter();
-  const { id } = router.query;
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -44,14 +43,14 @@ export default function handler({ animalData }) {
 
   return (
     <>
-      <h1>Id: {id}</h1>
       <Container paddingMobile="20px 10px">
         <Container flexDirection="column" padding="40px 30px">
-          <Container>
+          <Container maxWidth="500px" maxHeight="500px">
             <StyledImg
               src={photos[0]?.large || "/placeholders/placeholder-image.png"}
               width={500}
               height={500}
+              quality={100}
               alt="Picture"
             />
           </Container>
@@ -102,7 +101,7 @@ export default function handler({ animalData }) {
                   gap="6px"
                   key={index}
                   backgroundColor="#fce9d8"
-                  padding="10px 20px"
+                  padding="5px 0px"
                 >
                   <Type size="0.8rem">{tag}</Type>
                 </Child>
@@ -116,7 +115,13 @@ export default function handler({ animalData }) {
 }
 
 export async function getStaticPaths() {
+  const access_token = await getToken();
   const response = await fetch("http://localhost:3000/api/petfinder/animals");
+  //   const response = fetch(`https://api.petfinder.com/v2/animals`, {
+  //     headers: {
+  //       Authorization: `Bearer ${access_token}`,
+  //     },
+  //   });
   const data = await response.json();
   const paths = data.animals.map((animal) => ({
     params: { id: animal.id.toString() },
