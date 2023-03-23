@@ -1,7 +1,6 @@
-import { Avatar, Card, Skeleton, Switch } from "antd";
+import { Avatar, Card } from "antd";
 import { GrandParent, Parent, Child } from "src/styles/styles";
 import Button from "../Button/Button";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -13,17 +12,17 @@ const StyledCard = styled(Card)`
   border-radius: 10px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1, 0.8);
   transition: all 0.3s ease-in-out;
-  // max-width: 300px;
-  // width: 100% !important;
-  // margin: 0 auto;
+  max-width: 350px;
+  // max-height: 250px;
   &:hover {
     translate-y: 5px;
   }
 `;
 
-const mainImage = styled.img`
-  width: 100%;
-  max-height: 300px;
+const MyImage = styled(Image)`
+  max-width: 300px;
+  max-height: 250px;
+  border-radius: 10px;
 `;
 
 const { Meta } = Card;
@@ -45,14 +44,6 @@ export default function MyCard({ ...props }) {
     loading,
   } = props;
 
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-  // });
-
   let trimmedDescription = description;
   if (description) {
     trimmedDescription =
@@ -66,7 +57,7 @@ export default function MyCard({ ...props }) {
       <StyledCard
         loading={loading}
         cover={
-          <Image
+          <MyImage
             src={image || "/placeholders/placeholder-image.png"}
             alt="card cover"
             width={300}

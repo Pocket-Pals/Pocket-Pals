@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import { getToken } from "src/server/petfinder-auth";
 import { Lottie } from "lottie-react";
+import { Card } from "antd";
 
 const StyledImg = styled(Image)`
   border-radius: 0.5rem;
@@ -32,7 +33,7 @@ export default function handler({ animalData }) {
 
   const values = {
     Type: type,
-    Status: status,
+    Status: status.toUpperCase().slice(0, 1) + status.slice(1),
     Size: size,
     Breed: breeds.primary,
     Age: age,

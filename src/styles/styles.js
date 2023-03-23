@@ -86,7 +86,6 @@ export const CardConatiner = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
-  background-color: #f5f5f5;
   border-radius: 0.5rem;
   width: 100%;
   @media (max-width: 1593px) {
@@ -107,4 +106,7 @@ export const Body = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  width: ${(props) => props.width || "auto"};
+  height: ${(props) => props.height || "auto"};
+  gap: ${(props) => props.gap || "0"};
 `;

@@ -63,12 +63,13 @@ export default function find() {
         <Flex>
           {/* <Sidebar /> */}
 
-          <Body>
+          <Body width="100%">
             <SearchBar
               handleValue={searchQuery}
               handleChange={(e) => setSearchQuery(e.target.value)}
               handleClick={() => handleSearch(searchQuery)}
             />
+
             {loadSpinner ? (
               <Container
                 justifyContent="center"
