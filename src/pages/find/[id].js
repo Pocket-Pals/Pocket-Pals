@@ -40,7 +40,7 @@ export default function handler({ animalData }) {
     Gender: gender,
   };
 
-  console.log(tags);
+  // console.log(tags);
 
   return (
     <>
