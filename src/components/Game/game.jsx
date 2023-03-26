@@ -16,6 +16,7 @@ export default function Game(){
   let scoreText
   let bowlText
   let hunger = 100
+  let raccoons
 
   class sceneA extends Phaser.Scene {
     constructor(){
@@ -246,6 +247,10 @@ export default function Game(){
       '/assets/character/spritesheet1.png',
       { frameWidth: 344, frameHeight: 369 }
       )
+      this.load.spritesheet('raccoon', 
+      '/assets/character/raccoon.png',
+      { frameWidth: 363, frameHeight: 295}
+      )
       this.load.image('grass', '/assets/bg/grass.png')
       this.load.image('fakeGrass', '/assets/bg/hiddenPlatform.png')
       this.load.image('sky', '/assets/bg/sky.png')
@@ -264,6 +269,38 @@ export default function Game(){
         .setCollideWorldBounds(true)
         .setBounce(0.2)
         .setDepth(3)
+
+      raccoons = this.physics.add.group({
+        key: 'raccoon',
+        repeat: 3,
+        setXY: { x: 800, y: 450, stepX: 50}
+      })
+
+      
+      
+      
+      this.anims.create({
+        key: 'raccoonRight',
+        frames: this.anims.generateFrameNumbers('raccoon', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+      })
+      this.anims.create({
+        key: 'raccoonLeft',
+        frames: this.anims.generateFrameNumbers('raccoon', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+      })
+      
+      raccoons.children.iterate((raccoon) => {
+        raccoon.setVelocityX(100)
+        raccoon.anims.play('raccoonLeft', true)
+        raccoon.setCollideWorldBounds(true)
+        raccoon.setScale(0.3)
+        raccoon.setDepth(3)
+
+      })
+
 
       this.add.image(0, 600, 'grass')
         .setDepth(2)
@@ -361,6 +398,7 @@ export default function Game(){
       this.physics.add.collider(player, grass)
       this.physics.add.collider(twigGroup, grass)
       this.physics.add.overlap(player, twigGroup, hitTwig, null, this)
+      this.physics.add.collider(raccoons, grass)
     }
 
 
@@ -379,6 +417,25 @@ export default function Game(){
       } if (cursors.up.isDown && player.body.touching.down) {
           player.setVelocityY(-330)
       }
+
+      raccoons.children.iterate((raccoon) => {
+        if (raccoon.body.blocked.right) {
+          
+          raccoon.setVelocityX(-100);
+          
+          raccoon.anims.play('raccoonRight', true)
+
+        }
+        else if (raccoon.body.blocked.left) {
+  
+          raccoon.setVelocityX(100)
+  
+          raccoon.anims.play('raccoonLeft', true)
+
+        }
+
+      })
+
     }
 
   }
@@ -396,7 +453,7 @@ export default function Game(){
         debug: false
       }
     },
-    scene: [sceneA, sceneB]
+    scene: [sceneB]
   }
 
   useEffect(() => {
