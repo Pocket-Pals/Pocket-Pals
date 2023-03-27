@@ -2,9 +2,13 @@ import Image from "next/image";
 import { Child, Container, Li, Type, Ul } from "src/styles/styles";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { getToken } from "src/server/petfinder-auth";
+// import { getToken } from "src/server/petfinder-auth";
 import { Lottie } from "lottie-react";
 import { Card } from "antd";
+
+import axios from "axios";
+
+import { getToken } from "src/server/petfinder-auth";
 
 const StyledImg = styled(Image)`
   border-radius: 0.5rem;
@@ -116,25 +120,23 @@ export default function handler({ animalData }) {
 }
 
 export async function getStaticPaths() {
-  const access_token = await getToken();
-  const response = await fetch("http://localhost:3000/api/petfinder/animals");
-  //   const response = fetch(`https://api.petfinder.com/v2/animals`, {
-  //     headers: {
-  //       Authorization: `Bearer ${access_token}`,
-  //     },
-  //   });
-  const data = await response.json();
-  const paths = data.animals.map((animal) => ({
-    params: { id: animal.id.toString() },
-  }));
-  return { paths, fallback: false };
+  // get no static paths
+  return { paths: [], fallback: true };
 }
 
 export async function getStaticProps({ params }) {
   const { id } = params;
-  const response = await fetch(
-    `http://localhost:3000/api/petfinder/animals/${id}`
+
+  const access_token = await getToken();
+  const response = await axios.get(
+    `https://api.petfinder.com/v2/animals/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    }
   );
-  const data = await response.json();
+
+  const data = response.data;
   return { props: { animalData: data.animal } };
 }
