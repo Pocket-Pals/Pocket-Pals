@@ -2,18 +2,15 @@ import { AudioOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
 import styled from "styled-components";
 const { Search } = Input;
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: "#1890ff",
-    }}
-  />
-);
+import { useRef, useEffect } from "react";
 
 const SearchContainer = styled.div`
   display: flex;
   width: 100%;
+`;
+
+const SearchBtn = styled(Search)`
+  background-color: #f67837;
 `;
 
 export default function SearchBar({
@@ -21,6 +18,10 @@ export default function SearchBar({
   handleValue,
   handleClick = () => {},
 }) {
+  const searchBtn = useRef(null);
+
+  // searchBtn.current.style.backgroundColor = "#f67837";
+
   return (
     <>
       <SearchContainer className="search-container">

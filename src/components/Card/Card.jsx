@@ -1,8 +1,8 @@
-import { Avatar, Card, Skeleton, Switch } from "antd";
+import { Avatar, Card } from "antd";
 import { GrandParent, Parent, Child } from "src/styles/styles";
 import Button from "../Button/Button";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Image from "next/image";
 
 const StyledCard = styled(Card)`
   display: flex;
@@ -12,12 +12,17 @@ const StyledCard = styled(Card)`
   border-radius: 10px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1, 0.8);
   transition: all 0.3s ease-in-out;
-  // max-width: 300px;
-  // width: 100% !important;
-  // margin: 0 auto;
+  max-width: 350px;
+  // max-height: 250px;
   &:hover {
     translate-y: 5px;
   }
+`;
+
+const MyImage = styled(Image)`
+  max-width: 366px;
+  max-height: 250px;
+  border-radius: 10px;
 `;
 
 const { Meta } = Card;
@@ -35,15 +40,9 @@ export default function MyCard({ ...props }) {
     tags,
     tagsOne,
     handleClick,
+    handleCardClick,
+    loading,
   } = props;
-
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  });
 
   let trimmedDescription = description;
   if (description) {
@@ -58,9 +57,11 @@ export default function MyCard({ ...props }) {
       <StyledCard
         loading={loading}
         cover={
-          <img
-            alt="card cover"
+          <MyImage
             src={image || "/placeholders/placeholder-image.png"}
+            alt="card cover"
+            width={300}
+            height={250}
           />
         }
       >
@@ -101,6 +102,12 @@ export default function MyCard({ ...props }) {
             </Child>
           </Parent>
           <Button text="Adopt Me" onClick={handleClick} />
+          <Button
+            type="secondary"
+            text="View details"
+            onClick={handleCardClick}
+            border="2px solid #F67837"
+          />
         </GrandParent>
       </StyledCard>
     </>
