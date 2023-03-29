@@ -261,6 +261,7 @@ export default function Game() {
         }
         bubbleParticles.emitParticleAt(player.x, player.y)
       }
+
     }
 
     makeBar(x, y, color) {
@@ -303,6 +304,8 @@ export default function Game() {
     }
 
     preload() {
+
+
 
       const {key, path, w, h} = useCharacterFromQuery()
 
@@ -424,7 +427,7 @@ export default function Game() {
         twig.setRotation(rotation);
       }
 
-      function hitTwig(player, twig) {
+      function hitTwig(player, twig){
 
         if (health < 300) {
           health += 20
