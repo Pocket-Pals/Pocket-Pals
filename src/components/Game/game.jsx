@@ -446,12 +446,12 @@ export default function Game() {
         loop: true,
       });
 
-
-      function hitRaccoon(player) {
+      
+      function hitRaccoon(player){
         player.setTint(0xD78D8D)
 
 
-        if (health > 0) {
+        if (health > 0){
           health -= 5
           healthText.setText('Health: ' + health)
         } else if (health === 0) {
@@ -599,5 +599,6 @@ export default function Game() {
 
 
   </>)
+  
 
 }
