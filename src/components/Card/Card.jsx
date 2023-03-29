@@ -52,6 +52,11 @@ export default function MyCard({ ...props }) {
         : description;
   }
 
+  let trimmedTitle = title;
+  if (title) {
+    trimmedTitle = title.length > 20 ? title.substring(0, 20) + "..." : title;
+  }
+
   return (
     <>
       <StyledCard
@@ -69,7 +74,7 @@ export default function MyCard({ ...props }) {
           avatar={
             <Avatar src={avatar || "/placeholders/placeholder-image.png"} />
           }
-          title={title || "Default Title"}
+          title={trimmedTitle || "Default Title"}
           description={trimmedDescription || "No description provided."}
         />
 
