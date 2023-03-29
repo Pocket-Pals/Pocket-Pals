@@ -75,29 +75,29 @@ export default function MyCard({ ...props }) {
 
         <GrandParent>
           <Parent>
-            <Child width="100%">
+            <Child width="100%" backgroundColor="#FFD9CB">
               <p>{breed + " 🐕" || "No breed provided."}</p>
             </Child>
           </Parent>
           <Parent>
-            <Child width="100%">
+            <Child width="100%" backgroundColor="#FFEAE7">
               <p>{tagsOne || "TAGS"}</p>
             </Child>
-            <Child>
+            <Child backgroundColor="#EDE5FF">
               <p>{age || "AGE"}</p>
             </Child>
-            <Child width="100%">
+            <Child width="100%" backgroundColor="#FFFCBE">
               <p>{adoptStatus || "STATUS"}</p>
             </Child>
           </Parent>
           <Parent>
-            <Child>
+            <Child backgroundColor="#EBFDC9">
               <p>{size || "SIZE"}</p>
             </Child>
-            <Child width="100%">
+            <Child width="100%" backgroundColor="#EBEBEB">
               <p>{tags || "NO TAGS"}</p>
             </Child>
-            <Child>
+            <Child backgroundColor="#FFCBBE">
               <p>{gender || "GENDER"}</p>
             </Child>
           </Parent>
