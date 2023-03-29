@@ -1,90 +1,83 @@
-import React from "react";
-import MyCard from "src/components/Card/Card";
-import Button from "src/components/Button/Button";
+import Image from "next/image";
+import { Child, Container, Li, Type, Ul } from "src/styles/styles";
+import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { Flex } from "src/styles/styles";
+import axios from "axios";
 
-export default function () {
-  const [dogs, setDogs] = useState([]);
+const StyledImg = styled(Image)`
+  border-radius: 0.5rem;
+`;
 
-  // const tryGetToken = async () => {
-  //   const response = await fetch("/api/petfinder/animals");
-  //   const data = await response.json();
-  //   console.log(data.types);
-  // };
-
-  const getDogs = async () => {
-    try {
-      const response = await fetch("/api/petfinder/animals");
-      const data = await response.json();
-      const dogData = data.animals.filter((animal) => animal.type === "Dog");
-      console.log(dogData);
-      setDogs(dogData);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  // useEffect(() => {
-  //   getDogs();
-  // }, []);
-
-  /*  const addData = async () => {
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815,
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  };
-
-  const readData = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(db, "users"));
-      querySnapshot.forEach((doc) => {
-        console.log(`${doc.id} => ${doc.data()}`);
-      });
-    } catch (e) {
-      console.error("Error reading document: ", e);
-    }
-  };
- */
-
-  const petRoute = (o) => {
-    window.open(o.url, "_blank");
-  };
+export default function handler({ txt, description, tags, src }) {
+  const typeList = ["Type", "Status", "Size", "Breed", "Attributes"];
+  const tagList = ["Tag1", "Tag2", "Tag3", "Tag4", "Tag5"];
 
   return (
     <>
-      <Flex width="fit-content">
-        <Button text="Get dogs" onClick={getDogs} />
-      </Flex>
-      {dogs.map((o, i) => (
-        <MyCard
-          key={i}
-          title={o.name}
-          // image={
-          //   o.primary_photo_cropped.full || "https://placekitten.com/300/300"
-          // }
-          // avatar={o.photos[0].medium}
-          description={o.description}
-          breed={o.breeds.primary}
-          age={o.age}
-          adoptStatus={o.status.charAt(0).toUpperCase() + o.status.slice(1)}
-          size={o.size}
-          tagsOne={o.tags[0]}
-          tags={o.tags[2]}
-          gender={o.gender}
-          handleClick={() => petRoute(o)}
-        />
-      ))}
-      {/* <Auth />
-      <Button text="Add data" onClick={addData} />
-      <Button text="Read data" onClick={readData} /> */}
+      <Container paddingMobile="20px 10px">
+        <Container flexDirection="column" padding="40px 30px">
+          <Container>
+            <StyledImg
+              src={src || "/placeholders/placeholder-image.png"}
+              width={500}
+              height={500}
+              alt="Picture"
+            />
+          </Container>
+        </Container>
+        <Container
+          flexDirection="column"
+          gap="20px"
+          padding="40px 30px"
+          paddingMobile="20px 10px"
+          gapMobile="0px"
+        >
+          <div>
+            <h1 className="text-xl">Name</h1>
+          </div>
+          <Ul flexDirection="column" gap="10px">
+            {typeList.map((item, index) => {
+              return (
+                <Li key={index}>
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {item}:
+                  </span>{" "}
+                  {txt || "Not Available"}
+                </Li>
+              );
+            })}
+          </Ul>
+          <Container>
+            <Type size="0.9rem">
+              {description ||
+                "Bite the neighbor's bratty kid purr like a car engine oh yes, there is my human slave woman she does best pats ever that all i like about her hiss meow iâ€™m so hungry iâ€™m so hungry but ew not for that . Munch, munch, chomp, chomp see owner, run in terror, i like fish so purrr purr littel cat, little cat purr purr. Then cats take over the world poop on grasses, for missing until dinner time, yet give attitude, or bite the neighbor's bratty kid find empty spot in cupboard and sleep all day, or that box? i can fit in that box. Paw at beetle and eat it before it gets away side-eyes your other hand while being petted and demand to have some of whatever the human is cooking, then sniff the offering and walk away weigh eight pounds but take up a full-size bed, and if human is on laptop sit on the keyboard for poop on the floor, break a planter, sprint, eat own hair, vomit hair, hiss"}
+            </Type>
+          </Container>
+          <Container
+            gap="15px"
+            flexDirectionMobile="row"
+            justifyContentMobile="flex-start"
+            alignItemsMobile="flex-start"
+            width="100%"
+            gapMobile="10px"
+            marginMobile="1rem"
+          >
+            {tagList.map((o, i) => {
+              return (
+                <>
+                  <Child key={i}>
+                    <Type size="0.8rem">{tags || o}</Type>
+                  </Child>
+                </>
+              );
+            })}
+          </Container>
+        </Container>
+      </Container>
     </>
   );
 }
