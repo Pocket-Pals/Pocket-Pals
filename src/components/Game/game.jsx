@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-import Phaser from "phaser";
-import axios from "axios";
-=======
 import {useState, useEffect} from 'react' 
 import Phaser from 'phaser'
 import Head from 'next/head'
->>>>>>> main
 
 export default function Game() {
   const [game, setGame] = useState({});
@@ -29,16 +23,6 @@ export default function Game() {
     getWeather();
   }, []);
 
-<<<<<<< HEAD
-  let platforms;
-  let grass;
-  let player;
-  let stars;
-  let score = 0;
-  let scoreText;
-  let bowlText;
-  let hunger = 100;
-=======
 
   let platforms
   let grass
@@ -52,7 +36,6 @@ export default function Game() {
   let hunger = 300
   let raccoons
   let health = 300
->>>>>>> main
 
   class sceneA extends Phaser.Scene {
     constructor() {
@@ -204,50 +187,6 @@ export default function Game() {
         sponge.clearTint();
       });
 
-<<<<<<< HEAD
-      stars = this.physics.add.group({
-        key: "star",
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 },
-      });
-
-      stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-      });
-
-      scoreText = this.add.text(16, 16, "score: 0", {
-        fontSize: "32px",
-        fill: "#000",
-      });
-      bowlText = this.add.text(16, 64, `hunger: ${hunger}`, {
-        fontSize: "32px",
-        fill: "#000",
-      });
-
-      //physics
-      this.physics.add.collider(player, platforms);
-      this.physics.add.collider(stars, platforms);
-      this.physics.add.overlap(player, stars, collectStar, null, this);
-      this.physics.add.collider(sponge, platforms);
-      this.physics.add.collider(sponge, player);
-      this.physics.add.collider(bowl, platforms);
-      this.physics.add.overlap(bowl, player, hitBowl, null, this);
-      this.physics.add.collider(water, platforms);
-      this.physics.add.collider(player, sponge, cleanPlayer, null, this);
-
-      function hitBowl() {
-        if (hunger > 0) {
-          hunger -= 1;
-          bowlText.setText("hunger: " + hunger);
-        }
-      }
-
-      function collectStar(player, star) {
-        score += 10;
-        scoreText.setText("Score: " + score);
-
-        star.disableBody(true, true);
-=======
       // stars = this.physics.add.group({
       //   key: 'star',
       //   repeat: 11,
@@ -314,7 +253,6 @@ export default function Game() {
           this.setValue(hygieneBar, hygiene)
         }
         bubbleParticles.emitParticleAt(player.x, player.y)
->>>>>>> main
       }
 
       function cleanPlayer(player) {
@@ -322,10 +260,6 @@ export default function Game() {
       }
     }
 
-<<<<<<< HEAD
-    update() {
-      let cursors = this.input.keyboard.createCursorKeys();
-=======
     makeBar(x, y, color) {
       let bar = this.add.graphics()
       bar.fillStyle(color, 1)
@@ -343,7 +277,6 @@ export default function Game() {
 
     update(){
       let cursors = this.input.keyboard.createCursorKeys()
->>>>>>> main
 
       if (cursors.left.isDown) {
         player.setVelocityX(-160);
@@ -366,23 +299,6 @@ export default function Game() {
       super({ key: "sceneB" });
     }
 
-<<<<<<< HEAD
-    preload() {
-      this.load.spritesheet("player", "/assets/character/spritesheet1.png", {
-        frameWidth: 344,
-        frameHeight: 369,
-      });
-      this.load.image("grass", "/assets/bg/grass.png");
-      this.load.image("fakeGrass", "/assets/bg/hiddenPlatform.png");
-      this.load.image("sky", "/assets/bg/sky.png");
-      this.load.image("tree1", "/assets/env/tree1.png");
-      this.load.image("tree2", "/assets/env/tree2.png");
-      this.load.image("tree3", "/assets/env/tree3.png");
-      this.load.image("tree4", "/assets/env/tree4.png");
-      this.load.image("twig1", "/assets/items/twig1.png");
-      this.load.image("twig2", "/assets/items/twig2.png");
-      this.load.image("twig3", "/assets/items/twig3.png");
-=======
     preload(){
 
       this.load.spritesheet('player', 
@@ -403,7 +319,6 @@ export default function Game() {
       this.load.image('twig1', '/assets/items/twig1.png')
       this.load.image('twig2', '/assets/items/twig2.png')
       this.load.image('twig3', '/assets/items/twig3.png')
->>>>>>> main
     }
 
     create() {
@@ -415,9 +330,6 @@ export default function Game() {
         .setBounce(0.2)
         .setDepth(3);
 
-<<<<<<< HEAD
-      this.add.image(0, 600, "grass").setDepth(2);
-=======
       raccoons = this.physics.add.group({
         key: 'raccoon',
         repeat: 3,
@@ -455,7 +367,6 @@ export default function Game() {
       
       this.add.image(600, 600, 'grass')
         .setDepth(2)
->>>>>>> main
 
       this.add.image(600, 600, "grass").setDepth(2);
 
@@ -507,10 +418,6 @@ export default function Game() {
         twig.setRotation(rotation);
       }
 
-<<<<<<< HEAD
-      function hitTwig(player, twig) {
-        twig.destroy();
-=======
       function hitTwig(player, twig){
 
         if (health < 300){
@@ -525,7 +432,6 @@ export default function Game() {
         setTimeout(() =>{
           player.clearTint()
         }, 1000)
->>>>>>> main
       }
 
       this.time.addEvent({
