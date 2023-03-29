@@ -31,3 +31,14 @@ body {
     grid-auto-flow: row;
   }
 }
+
+canvas{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}

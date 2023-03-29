@@ -1,18 +1,15 @@
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-import Phaser from "phaser";
-import axios from "axios";
-=======
-import {useState, useEffect} from 'react' 
+import { useState, useEffect } from 'react'
 import Phaser from 'phaser'
 import Head from 'next/head'
->>>>>>> main
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 export default function Game() {
   const [game, setGame] = useState({});
 
   const [weather, setWeather] = useState();
   const [test, setTest] = useState("test");
+
   async function getWeather() {
     const location = "burnaby";
     const units = "metric";
@@ -28,17 +25,22 @@ export default function Game() {
   useEffect(() => {
     getWeather();
   }, []);
+  const router = useRouter();
 
-<<<<<<< HEAD
-  let platforms;
-  let grass;
-  let player;
-  let stars;
-  let score = 0;
-  let scoreText;
-  let bowlText;
-  let hunger = 100;
-=======
+
+  function useCharacterFromQuery() {
+    const { difficulty } = router.query;
+    console.log(difficulty)
+    const spriteSheetKeys = {
+      '0': { key: 'spritesheet1', path: '/assets/character/spritesheet1.png', w: 344, h: 369 },
+      '1': { key: 'spritesheet2', path: '/assets/character/spritesheet2.png', w: 345, h: 349 },
+      '2': { key: 'spritesheet3', path: '/assets/character/spritesheet3.png', w: 351, h: 334 }
+    };
+    const characterSpriteKey = spriteSheetKeys[difficulty]
+  
+    return characterSpriteKey;
+  }
+  
 
   let platforms
   let grass
@@ -52,14 +54,18 @@ export default function Game() {
   let hunger = 300
   let raccoons
   let health = 300
->>>>>>> main
+  
 
+  
   class sceneA extends Phaser.Scene {
     constructor() {
       super({ key: "sceneA" });
     }
-
+    
     preload() {
+
+     
+      const {key, path, w, h} = useCharacterFromQuery()
       this.load.image("sky", "/assets/bg/sky.png");
       this.load.image("star", "/assets/items/star.png");
       this.load.image("ground", "/assets/env/floor.png");
@@ -70,26 +76,25 @@ export default function Game() {
       this.load.image("bowl", "/assets/items/bowl.png");
       this.load.image("water", "/assets/items/water.png");
       this.load.image("bubble", "/assets/items/bubble.png");
-      this.load.spritesheet("player", "/assets/character/spritesheet1.png", {
-        frameWidth: 344,
-        frameHeight: 369,
-      });
+      this.load.spritesheet(key, path, {
+        frameWidth: w,
+        frameHeight: h,
+      })
     }
-
+    
     create() {
+      
+      const defaultCharacter = 'player';
+      const { key, path } = useCharacterFromQuery(defaultCharacter);
+
       this.add.image(400, 300, "sky");
-      // this.add.image(400, 300, 'star')
-
       platforms = this.physics.add.staticGroup();
-
-      // platforms.create(419.5, 400, 'ground').setScale(1).refreshBody()
-
       this.add.image(400, 280, "wall");
       this.add.image(419.5, 280, "ground");
       let door = this.add.image(150, 215, "door").setInteractive();
       platforms.create(400, 600, "platform");
       player = this.physics.add
-        .sprite(150, 100, "player")
+        .sprite(150, 100, key)
         .setScale(0.4)
         .setCrop(0, 0, 400, 600);
       let bowl = this.physics.add.image(500, 600, "bowl");
@@ -97,26 +102,22 @@ export default function Game() {
       let water = this.physics.add.image(300, 600, "water");
       let bubbles = this.add.particles("bubble");
 
-      // platforms.create(600, 400, 'ground')
-      // platforms.create(50, 250, 'ground')
-      // platforms.create(750, 220, 'ground')
-
       this.anims.create({
         key: "left",
-        frames: this.anims.generateFrameNumbers("player", { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers(key, { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1,
       });
 
       this.anims.create({
         key: "turn",
-        frames: [{ key: "player", frame: 4 }],
+        frames: [{ key: key, frame: 4 }],
         frameRate: 20,
       });
 
       this.anims.create({
         key: "right",
-        frames: this.anims.generateFrameNumbers("player", { start: 5, end: 8 }),
+        frames: this.anims.generateFrameNumbers(key, { start: 5, end: 8 }),
         frameRate: 10,
         repeat: -1,
       });
@@ -204,61 +205,6 @@ export default function Game() {
         sponge.clearTint();
       });
 
-<<<<<<< HEAD
-      stars = this.physics.add.group({
-        key: "star",
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 },
-      });
-
-      stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-      });
-
-      scoreText = this.add.text(16, 16, "score: 0", {
-        fontSize: "32px",
-        fill: "#000",
-      });
-      bowlText = this.add.text(16, 64, `hunger: ${hunger}`, {
-        fontSize: "32px",
-        fill: "#000",
-      });
-
-      //physics
-      this.physics.add.collider(player, platforms);
-      this.physics.add.collider(stars, platforms);
-      this.physics.add.overlap(player, stars, collectStar, null, this);
-      this.physics.add.collider(sponge, platforms);
-      this.physics.add.collider(sponge, player);
-      this.physics.add.collider(bowl, platforms);
-      this.physics.add.overlap(bowl, player, hitBowl, null, this);
-      this.physics.add.collider(water, platforms);
-      this.physics.add.collider(player, sponge, cleanPlayer, null, this);
-
-      function hitBowl() {
-        if (hunger > 0) {
-          hunger -= 1;
-          bowlText.setText("hunger: " + hunger);
-        }
-      }
-
-      function collectStar(player, star) {
-        score += 10;
-        scoreText.setText("Score: " + score);
-
-        star.disableBody(true, true);
-=======
-      // stars = this.physics.add.group({
-      //   key: 'star',
-      //   repeat: 11,
-      //   setXY: { x: 12, y: 0, stepX: 70 }
-      // })
-      
-      // stars.children.iterate(function (child) {
-        
-      //   child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-        
-      // })
 
       let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0)
       this.setValue(healthBar, health)
@@ -272,11 +218,11 @@ export default function Game() {
       let hygieneBar = this.makeBar(16, 70, 0x89FFF8).setScrollFactor(0)
       this.setValue(hygieneBar, hygiene)
 
-      healthText = this.add.text(20, 13, `Health: ${health}`, { fontSize: '16px', fill: '#000'}).setDepth(4)
+      healthText = this.add.text(20, 13, `Health: ${health}`, { fontSize: '16px', fill: '#000' }).setDepth(4)
       thirstText = this.add.text(20, 33, `Thirst: ${thirst}`, { fontSize: '16px', fill: '#000' }).setDepth(4)
       bowlText = this.add.text(20, 53, `Hunger: ${hunger}`, { fontSize: '16px', fill: '#000' }).setDepth(4)
       hygieneText = this.add.text(20, 73, `Hygiene: ${hygiene}`, { fontSize: '16px', fill: '#000' }).setDepth(4)
-  
+
       //physics
       this.physics.add.collider(player, platforms)
       // this.physics.add.collider(stars, platforms)
@@ -287,19 +233,19 @@ export default function Game() {
       this.physics.add.overlap(bowl, player, hitBowl, null, this)
       this.physics.add.collider(water, platforms)
       this.physics.add.collider(player, sponge, cleanPlayer, null, this)
-      
-      function hitBowl(){
-  
-        if (hunger > 0){
+
+      function hitBowl() {
+
+        if (hunger > 0) {
           hunger -= 1
-          bowlText.setText('Hunger: ' + hunger) 
+          bowlText.setText('Hunger: ' + hunger)
           this.setValue(magicBar, hunger)
         }
-        
+
       }
-  
+
       function waterBowl() {
-        if (thirst > 0){
+        if (thirst > 0) {
           thirst -= 1
           thirstText.setText('Thirst: ' + thirst)
           this.setValue(powerBar, thirst)
@@ -307,25 +253,16 @@ export default function Game() {
         }
       }
 
-      function cleanPlayer(player){
-        if (hygiene < 300){
+      function cleanPlayer(player) {
+        if (hygiene < 300) {
           hygiene += 1
           hygieneText.setText('Hygiene: ' + hygiene)
           this.setValue(hygieneBar, hygiene)
         }
         bubbleParticles.emitParticleAt(player.x, player.y)
->>>>>>> main
-      }
-
-      function cleanPlayer(player) {
-        bubbleParticles.emitParticleAt(player.x, player.y);
       }
     }
 
-<<<<<<< HEAD
-    update() {
-      let cursors = this.input.keyboard.createCursorKeys();
-=======
     makeBar(x, y, color) {
       let bar = this.add.graphics()
       bar.fillStyle(color, 1)
@@ -336,14 +273,13 @@ export default function Game() {
       return bar
     }
 
-    setValue(bar,percentage) {
-      bar.scaleX = percentage/100
+    setValue(bar, percentage) {
+      bar.scaleX = percentage / 100
     }
 
 
-    update(){
+    update() {
       let cursors = this.input.keyboard.createCursorKeys()
->>>>>>> main
 
       if (cursors.left.isDown) {
         player.setVelocityX(-160);
@@ -366,32 +302,16 @@ export default function Game() {
       super({ key: "sceneB" });
     }
 
-<<<<<<< HEAD
     preload() {
-      this.load.spritesheet("player", "/assets/character/spritesheet1.png", {
-        frameWidth: 344,
-        frameHeight: 369,
-      });
-      this.load.image("grass", "/assets/bg/grass.png");
-      this.load.image("fakeGrass", "/assets/bg/hiddenPlatform.png");
-      this.load.image("sky", "/assets/bg/sky.png");
-      this.load.image("tree1", "/assets/env/tree1.png");
-      this.load.image("tree2", "/assets/env/tree2.png");
-      this.load.image("tree3", "/assets/env/tree3.png");
-      this.load.image("tree4", "/assets/env/tree4.png");
-      this.load.image("twig1", "/assets/items/twig1.png");
-      this.load.image("twig2", "/assets/items/twig2.png");
-      this.load.image("twig3", "/assets/items/twig3.png");
-=======
-    preload(){
 
-      this.load.spritesheet('player', 
-      '/assets/character/spritesheet1.png',
-      { frameWidth: 344, frameHeight: 369 }
+      const {key, path, w, h} = useCharacterFromQuery()
+
+      this.load.spritesheet(key, path,
+        { frameWidth: w, frameHeight: h }
       )
-      this.load.spritesheet('raccoon', 
-      '/assets/character/raccoon.png',
-      { frameWidth: 363, frameHeight: 295}
+      this.load.spritesheet('raccoon',
+        '/assets/character/raccoon.png',
+        { frameWidth: 363, frameHeight: 295 }
       )
       this.load.image('grass', '/assets/bg/grass.png')
       this.load.image('fakeGrass', '/assets/bg/hiddenPlatform.png')
@@ -403,30 +323,28 @@ export default function Game() {
       this.load.image('twig1', '/assets/items/twig1.png')
       this.load.image('twig2', '/assets/items/twig2.png')
       this.load.image('twig3', '/assets/items/twig3.png')
->>>>>>> main
     }
 
     create() {
+      const {key, path, w, h} = useCharacterFromQuery()
+
       player = this.physics.add
-        .sprite(150, 450, "player")
+        .sprite(150, 450, key)
         .setScale(0.4)
         .setCrop(0, 0, 400, 600)
         .setCollideWorldBounds(true)
         .setBounce(0.2)
         .setDepth(3);
 
-<<<<<<< HEAD
-      this.add.image(0, 600, "grass").setDepth(2);
-=======
       raccoons = this.physics.add.group({
         key: 'raccoon',
         repeat: 3,
-        setXY: { x: 800, y: 450, stepX: 50}
+        setXY: { x: 800, y: 450, stepX: 50 }
       })
 
-      
-      
-      
+
+
+
       this.anims.create({
         key: 'raccoonRight',
         frames: this.anims.generateFrameNumbers('raccoon', { start: 0, end: 3 }),
@@ -439,7 +357,7 @@ export default function Game() {
         frameRate: 10,
         repeat: -1
       })
-      
+
       raccoons.children.iterate((raccoon) => {
         raccoon.setVelocityX(100)
         raccoon.anims.play('raccoonLeft', true)
@@ -452,10 +370,9 @@ export default function Game() {
 
       this.add.image(0, 600, 'grass')
         .setDepth(2)
-      
+
       this.add.image(600, 600, 'grass')
         .setDepth(2)
->>>>>>> main
 
       this.add.image(600, 600, "grass").setDepth(2);
 
@@ -507,13 +424,9 @@ export default function Game() {
         twig.setRotation(rotation);
       }
 
-<<<<<<< HEAD
       function hitTwig(player, twig) {
-        twig.destroy();
-=======
-      function hitTwig(player, twig){
 
-        if (health < 300){
+        if (health < 300) {
           health += 20
         }
 
@@ -522,10 +435,9 @@ export default function Game() {
         this.setValue(healthBar, health)
         twig.destroy()
 
-        setTimeout(() =>{
+        setTimeout(() => {
           player.clearTint()
         }, 1000)
->>>>>>> main
       }
 
       this.time.addEvent({
@@ -534,33 +446,30 @@ export default function Game() {
         loop: true,
       });
 
-<<<<<<< HEAD
-      grass = this.physics.add.staticGroup().create(400, 620, "fakeGrass");
-=======
-      
-      function hitRaccoon(player){
-        player.setTint(0xD78D8D)
-        
 
-        if (health > 0){
+      function hitRaccoon(player) {
+        player.setTint(0xD78D8D)
+
+
+        if (health > 0) {
           health -= 5
           healthText.setText('Health: ' + health)
-        } else if (health === 0){
+        } else if (health === 0) {
           this.scene.start('sceneA')
         }
-        
+
         this.setValue(healthBar, health)
-        
+
         setTimeout(() => {
           player.clearTint()
         }, 1000)
       }
 
-      healthText = this.add.text(20, 13, `Health: ${health}`, { fontSize: '16px', fill: '#000'}).setDepth(4).setScrollFactor(0)
+      healthText = this.add.text(20, 13, `Health: ${health}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
       thirstText = this.add.text(20, 33, `Thirst: ${thirst}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
       bowlText = this.add.text(20, 53, `Hunger: ${hunger}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
       hygieneText = this.add.text(20, 73, `Hygiene: ${hygiene}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
-      
+
       let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0)
       this.setValue(healthBar, health)
 
@@ -575,41 +484,14 @@ export default function Game() {
 
       grass = this.physics.add.staticGroup()
         .create(400, 620, 'fakeGrass')
->>>>>>> main
 
       this.anims.create({
         key: "left",
-        frames: this.anims.generateFrameNumbers("player", { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers(key, { start: 0, end: 3 }),
         frameRate: 10,
         repeat: -1,
       });
 
-<<<<<<< HEAD
-      this.anims.create({
-        key: "turn",
-        frames: [{ key: "player", frame: 4 }],
-        frameRate: 20,
-      });
-
-      this.anims.create({
-        key: "right",
-        frames: this.anims.generateFrameNumbers("player", { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1,
-      });
-
-      this.cameras.main.setBounds(0, 0, 600 * 2, 600);
-      this.physics.world.setBounds(0, 0, 600 * 2, 600);
-      this.cameras.main.startFollow(player, true, 0.05, 0);
-      this.cameras.main.followOffset.set(0, 0);
-      this.physics.add.collider(player, grass);
-      this.physics.add.collider(twigGroup, grass);
-      this.physics.add.overlap(player, twigGroup, hitTwig, null, this);
-    }
-
-    update() {
-      let cursors = this.input.keyboard.createCursorKeys();
-=======
       this.cameras.main.setBounds(0, 0, 600 * 2, 600)
       this.physics.world.setBounds(0, 0, 600 * 2, 600)
       this.cameras.main.startFollow(player, true, 0.05, 0)
@@ -632,13 +514,15 @@ export default function Game() {
       return bar
     }
 
-    setValue(bar,percentage) {
-      bar.scaleX = percentage/100
+    setValue(bar, percentage) {
+      bar.scaleX = percentage / 100
     }
 
-    update(){
+    update() {
+      
+   
+
       let cursors = this.input.keyboard.createCursorKeys()
->>>>>>> main
 
       if (cursors.left.isDown) {
         player.setVelocityX(-160);
@@ -656,16 +540,16 @@ export default function Game() {
 
       raccoons.children.iterate((raccoon) => {
         if (raccoon.body.blocked.right) {
-          
+
           raccoon.setVelocityX(-100);
-          
+
           raccoon.anims.play('raccoonRight', true)
 
         }
         else if (raccoon.body.blocked.left) {
-  
+
           raccoon.setVelocityX(100)
-  
+
           raccoon.anims.play('raccoonLeft', true)
 
         }
@@ -688,13 +572,8 @@ export default function Game() {
         debug: false,
       },
     },
-<<<<<<< HEAD
-    scene: [sceneB],
-  };
-=======
     scene: [sceneA, sceneB]
   }
->>>>>>> main
 
   useEffect(() => {
     async function initPhaser() {
@@ -702,31 +581,23 @@ export default function Game() {
         ...config,
       });
       setGame(game);
-      console.log(game);
     }
-<<<<<<< HEAD
-    initPhaser();
-  }, []);
-
-  return (
-    <>
-      <div id="game-content" />
-    </>
-  );
-=======
     initPhaser()
   }, [])
-  
+
   return (<>
     <Head>
-    <title>Pocket Pals</title>
-    <meta name="description" content="Generated by create next app" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.svg" />
+      <title>Pocket Pals</title>
+      <meta name="description" content="Generated by create next app" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" href="/favicon.svg" />
     </Head>
-    <div id='game-content' />
-  
+
+    <div className='gameCont'>
+      <div id='game-content' />
+    </div>
+
+
   </>)
-  
->>>>>>> main
+
 }

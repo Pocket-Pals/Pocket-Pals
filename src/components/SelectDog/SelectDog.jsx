@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import { Progress, Grid } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import data from "../../data/dogStats.json";
 
 const DogCardContainers = styled.div`
@@ -53,10 +54,10 @@ export default function SelectCard({
   hard = "/svgs/samoyed.svg",
 }) {
   const router = useRouter();
+  const {query} = router.query
 
   const handleSelect = (difficulty) => {
-    alert(`routes to /game/${difficulty} `);
-    // router.push(`/game/${difficulty}`);
+    
   };
   const handleBackToTutorial = () => {
     router.push("/tutorial");
@@ -161,11 +162,19 @@ export default function SelectCard({
               </Grid.Container>
             </div>
           </StatsContainer>
+          <Link
+            href={{
+              pathname: '/game',
+              query: {difficulty: 2}
+            }}
+          >
+        
           <Button
-            onClick={() => handleSelect("easy")}
+            // onClick={() => handleSelect(0)}
             text="Select"
             hoverbgcolor="#D96D36"
           />
+          </Link>
         </DogCard>
         <DogCard>
           <Typography
@@ -244,11 +253,17 @@ export default function SelectCard({
               </Grid.Container>
             </div>
           </StatsContainer>
+          <Link
+            href={{
+              pathname: '/game',
+              query: {difficulty: 0}
+            }}
+          >
           <Button
-            onClick={() => handleSelect("medium")}
             text="Select"
             hoverbgcolor="#D96D36"
           />
+          </Link>
         </DogCard>
         <DogCard>
           <Typography
@@ -327,11 +342,17 @@ export default function SelectCard({
               </Grid.Container>
             </div>
           </StatsContainer>
+          <Link
+            href={{
+              pathname: '/game',
+              query: {difficulty: 1}
+            }}
+          >
           <Button
-            onClick={() => handleSelect("hard")}
             text="Select"
             hoverbgcolor="#D96D36"
           />
+          </Link>
         </DogCard>
       </DogCardContainers>
     </>

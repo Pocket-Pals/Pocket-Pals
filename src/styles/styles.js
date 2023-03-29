@@ -110,3 +110,12 @@ export const Body = styled.div`
   height: ${(props) => props.height || "auto"};
   gap: ${(props) => props.gap || "0"};
 `;
+
+
+export const GameContainer = styled.div`
+  background-image: url('/assets/bg/pawprint.svg');
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: -10;
+`
