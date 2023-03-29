@@ -2,12 +2,8 @@ import Image from "next/image";
 import { Child, Container, Li, Type, Ul } from "src/styles/styles";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-// import { getToken } from "src/server/petfinder-auth";
-import { Lottie } from "lottie-react";
-import { Card } from "antd";
-
+import Button from "src/components/Button/Button";
 import axios from "axios";
-
 import { getToken } from "src/server/petfinder-auth";
 
 const StyledImg = styled(Image)`
@@ -44,10 +40,14 @@ export default function handler({ animalData }) {
     Gender: gender,
   };
 
-  // console.log(tags);
-
   return (
     <>
+      <Button
+        text="Back"
+        width="100px"
+        onClick={() => router.back()}
+        margin="20px"
+      />
       <Container paddingMobile="20px 10px">
         <Container flexDirection="column" padding="40px 30px">
           <Container maxWidth="500px" maxHeight="500px">
@@ -119,12 +119,7 @@ export default function handler({ animalData }) {
   );
 }
 
-export async function getStaticPaths() {
-  // get no static paths
-  return { paths: [], fallback: true };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const { id } = params;
 
   const access_token = await getToken();
