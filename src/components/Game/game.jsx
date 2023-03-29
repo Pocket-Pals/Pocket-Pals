@@ -11,12 +11,15 @@ export default function Game(){
   let platforms
   let grass
   let player
-  let stars
-  let score = 0
-  let scoreText
+  let thirst = 300
+  let thirstText
+  let healthText
+  let hygiene = 0
+  let hygieneText
   let bowlText
-  let hunger = 100
+  let hunger = 300
   let raccoons
+  let health = 300
 
   class sceneA extends Phaser.Scene {
     constructor(){
@@ -165,25 +168,39 @@ export default function Game(){
 
 
 
-      stars = this.physics.add.group({
-        key: 'star',
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 }
-      })
+      // stars = this.physics.add.group({
+      //   key: 'star',
+      //   repeat: 11,
+      //   setXY: { x: 12, y: 0, stepX: 70 }
+      // })
       
-      stars.children.iterate(function (child) {
+      // stars.children.iterate(function (child) {
         
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+      //   child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
         
-      })
-  
-      scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' })
-      bowlText = this.add.text(16, 64, `hunger: ${hunger}`, { fontSize: '32px', fill: '#000' })
+      // })
+
+      let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0)
+      this.setValue(healthBar, health)
+
+      let powerBar = this.makeBar(16, 30, 0x76CEFF).setScrollFactor(0)
+      this.setValue(powerBar, thirst)
+
+      let magicBar = this.makeBar(16, 50, 0xF26722).setScrollFactor(0)
+      this.setValue(magicBar, hunger)
+
+      let hygieneBar = this.makeBar(16, 70, 0x89FFF8).setScrollFactor(0)
+      this.setValue(hygieneBar, hygiene)
+
+      healthText = this.add.text(20, 13, `Health: ${health}`, { fontSize: '16px', fill: '#000'}).setDepth(4)
+      thirstText = this.add.text(20, 33, `Thirst: ${thirst}`, { fontSize: '16px', fill: '#000' }).setDepth(4)
+      bowlText = this.add.text(20, 53, `Hunger: ${hunger}`, { fontSize: '16px', fill: '#000' }).setDepth(4)
+      hygieneText = this.add.text(20, 73, `Hygiene: ${hygiene}`, { fontSize: '16px', fill: '#000' }).setDepth(4)
   
       //physics
       this.physics.add.collider(player, platforms)
-      this.physics.add.collider(stars, platforms)
-      this.physics.add.overlap(player, stars, collectStar, null, this)
+      // this.physics.add.collider(stars, platforms)
+      this.physics.add.overlap(player, water, waterBowl, null, this)
       this.physics.add.collider(sponge, platforms)
       this.physics.add.collider(sponge, player)
       this.physics.add.collider(bowl, platforms)
@@ -195,26 +212,46 @@ export default function Game(){
   
         if (hunger > 0){
           hunger -= 1
-          bowlText.setText('hunger: ' + hunger) 
+          bowlText.setText('Hunger: ' + hunger) 
+          this.setValue(magicBar, hunger)
         }
         
       }
   
-      function collectStar (player, star) {
-  
-        score += 10
-        scoreText.setText('Score: ' + score)
-  
-        star.disableBody(true, true)
+      function waterBowl() {
+        if (thirst > 0){
+          thirst -= 1
+          thirstText.setText('Thirst: ' + thirst)
+          this.setValue(powerBar, thirst)
+
+        }
       }
 
       function cleanPlayer(player){
+        if (hygiene < 300){
+          hygiene += 1
+          hygieneText.setText('Hygiene: ' + hygiene)
+          this.setValue(hygieneBar, hygiene)
+        }
         bubbleParticles.emitParticleAt(player.x, player.y)
       }
 
     }
 
-    
+    makeBar(x, y, color) {
+      let bar = this.add.graphics()
+      bar.fillStyle(color, 1)
+      bar.fillRect(0, 0, 150, 20)
+      bar.setDepth(4)
+      bar.x = x
+      bar.y = y
+      return bar
+    }
+
+    setValue(bar,percentage) {
+      bar.scaleX = percentage/100
+    }
+
 
     update(){
       let cursors = this.input.keyboard.createCursorKeys()
@@ -358,7 +395,19 @@ export default function Game(){
       }
 
       function hitTwig(player, twig){
+
+        if (health < 300){
+          health += 20
+        }
+
+        player.setTint(0x8DD78D)
+        healthText.setText('Health: ' + health)
+        this.setValue(healthBar, health)
         twig.destroy()
+
+        setTimeout(() =>{
+          player.clearTint()
+        }, 1000)
       }
 
       this.time.addEvent({
@@ -367,6 +416,41 @@ export default function Game(){
         loop: true
       })
 
+      
+      function hitRaccoon(player){
+        player.setTint(0xD78D8D)
+        
+
+        if (health > 0){
+          health -= 5
+          healthText.setText('Health: ' + health)
+        } else if (health === 0){
+          this.scene.start('sceneA')
+        }
+        
+        this.setValue(healthBar, health)
+        
+        setTimeout(() => {
+          player.clearTint()
+        }, 1000)
+      }
+
+      healthText = this.add.text(20, 13, `Health: ${health}`, { fontSize: '16px', fill: '#000'}).setDepth(4).setScrollFactor(0)
+      thirstText = this.add.text(20, 33, `Thirst: ${thirst}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
+      bowlText = this.add.text(20, 53, `Hunger: ${hunger}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
+      hygieneText = this.add.text(20, 73, `Hygiene: ${hygiene}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
+      
+      let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0)
+      this.setValue(healthBar, health)
+
+      let powerBar = this.makeBar(16, 30, 0x76CEFF).setScrollFactor(0)
+      this.setValue(powerBar, thirst)
+
+      let magicBar = this.makeBar(16, 50, 0xF26722).setScrollFactor(0)
+      this.setValue(magicBar, hunger)
+
+      let hygieneBar = this.makeBar(16, 70, 0x89FFF8).setScrollFactor(0)
+      this.setValue(hygieneBar, hygiene)
 
       grass = this.physics.add.staticGroup()
         .create(400, 620, 'fakeGrass')
@@ -398,9 +482,24 @@ export default function Game(){
       this.physics.add.collider(player, grass)
       this.physics.add.collider(twigGroup, grass)
       this.physics.add.overlap(player, twigGroup, hitTwig, null, this)
+      this.physics.add.overlap(player, raccoons, hitRaccoon, null, this)
       this.physics.add.collider(raccoons, grass)
     }
 
+
+    makeBar(x, y, color) {
+      let bar = this.add.graphics()
+      bar.fillStyle(color, 1)
+      bar.fillRect(0, 0, 150, 20)
+      bar.setDepth(3)
+      bar.x = x
+      bar.y = y
+      return bar
+    }
+
+    setValue(bar,percentage) {
+      bar.scaleX = percentage/100
+    }
 
     update(){
       let cursors = this.input.keyboard.createCursorKeys()
@@ -453,7 +552,7 @@ export default function Game(){
         debug: false
       }
     },
-    scene: [sceneB]
+    scene: [sceneA, sceneB]
   }
 
   useEffect(() => {
