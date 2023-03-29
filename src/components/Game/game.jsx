@@ -534,9 +534,6 @@ export default function Game() {
         loop: true,
       });
 
-<<<<<<< HEAD
-      grass = this.physics.add.staticGroup().create(400, 620, "fakeGrass");
-=======
       
       function hitRaccoon(player){
         player.setTint(0xD78D8D)
@@ -575,7 +572,6 @@ export default function Game() {
 
       grass = this.physics.add.staticGroup()
         .create(400, 620, 'fakeGrass')
->>>>>>> main
 
       this.anims.create({
         key: "left",
@@ -584,32 +580,6 @@ export default function Game() {
         repeat: -1,
       });
 
-<<<<<<< HEAD
-      this.anims.create({
-        key: "turn",
-        frames: [{ key: "player", frame: 4 }],
-        frameRate: 20,
-      });
-
-      this.anims.create({
-        key: "right",
-        frames: this.anims.generateFrameNumbers("player", { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1,
-      });
-
-      this.cameras.main.setBounds(0, 0, 600 * 2, 600);
-      this.physics.world.setBounds(0, 0, 600 * 2, 600);
-      this.cameras.main.startFollow(player, true, 0.05, 0);
-      this.cameras.main.followOffset.set(0, 0);
-      this.physics.add.collider(player, grass);
-      this.physics.add.collider(twigGroup, grass);
-      this.physics.add.overlap(player, twigGroup, hitTwig, null, this);
-    }
-
-    update() {
-      let cursors = this.input.keyboard.createCursorKeys();
-=======
       this.cameras.main.setBounds(0, 0, 600 * 2, 600)
       this.physics.world.setBounds(0, 0, 600 * 2, 600)
       this.cameras.main.startFollow(player, true, 0.05, 0)
@@ -638,7 +608,6 @@ export default function Game() {
 
     update(){
       let cursors = this.input.keyboard.createCursorKeys()
->>>>>>> main
 
       if (cursors.left.isDown) {
         player.setVelocityX(-160);
@@ -688,13 +657,8 @@ export default function Game() {
         debug: false,
       },
     },
-<<<<<<< HEAD
-    scene: [sceneB],
-  };
-=======
     scene: [sceneA, sceneB]
   }
->>>>>>> main
 
   useEffect(() => {
     async function initPhaser() {
@@ -704,16 +668,6 @@ export default function Game() {
       setGame(game);
       console.log(game);
     }
-<<<<<<< HEAD
-    initPhaser();
-  }, []);
-
-  return (
-    <>
-      <div id="game-content" />
-    </>
-  );
-=======
     initPhaser()
   }, [])
   
@@ -728,5 +682,4 @@ export default function Game() {
   
   </>)
   
->>>>>>> main
 }
