@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 import { useState, useEffect } from 'react'
 import Phaser from 'phaser'
 import Head from 'next/head'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-=======
-import { useState, useEffect } from "react";
-import Phaser from "phaser";
-import Head from "next/head";
->>>>>>> 59c7f84f84d9ab304ae42a9b3584c45595292d85
 
 export default function Game() {
   const [game, setGame] = useState({});
@@ -33,7 +27,6 @@ export default function Game() {
   }, []);
   const router = useRouter();
 
-<<<<<<< HEAD
 
   function useCharacterFromQuery() {
     const { difficulty } = router.query;
@@ -62,20 +55,6 @@ export default function Game() {
   let raccoons
   let health = 300
   
-=======
-  let platforms;
-  let grass;
-  let player;
-  let thirst = 300;
-  let thirstText;
-  let healthText;
-  let hygiene = 0;
-  let hygieneText;
-  let bowlText;
-  let hunger = 300;
-  let raccoons;
-  let health = 300;
->>>>>>> 59c7f84f84d9ab304ae42a9b3584c45595292d85
 
   
   class sceneA extends Phaser.Scene {
@@ -503,10 +482,7 @@ export default function Game() {
 
       let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0)
       this.setValue(healthBar, health)
-
-      let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0);
-      this.setValue(healthBar, health);
-
+      
       let powerBar = this.makeBar(16, 30, 0x76ceff).setScrollFactor(0);
       this.setValue(powerBar, thirst);
 
