@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import { useState, useEffect } from 'react'
 import Phaser from 'phaser'
 import Head from 'next/head'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+=======
+import { useState, useEffect } from "react";
+import Phaser from "phaser";
+import Head from "next/head";
+>>>>>>> 59c7f84f84d9ab304ae42a9b3584c45595292d85
 
 export default function Game() {
   const [game, setGame] = useState({});
@@ -27,6 +33,7 @@ export default function Game() {
   }, []);
   const router = useRouter();
 
+<<<<<<< HEAD
 
   function useCharacterFromQuery() {
     const { difficulty } = router.query;
@@ -55,6 +62,20 @@ export default function Game() {
   let raccoons
   let health = 300
   
+=======
+  let platforms;
+  let grass;
+  let player;
+  let thirst = 300;
+  let thirstText;
+  let healthText;
+  let hygiene = 0;
+  let hygieneText;
+  let bowlText;
+  let hunger = 300;
+  let raccoons;
+  let health = 300;
+>>>>>>> 59c7f84f84d9ab304ae42a9b3584c45595292d85
 
   
   class sceneA extends Phaser.Scene {
@@ -340,7 +361,7 @@ export default function Game() {
         .setDepth(3);
 
       raccoons = this.physics.add.group({
-        key: 'raccoon',
+        key: "raccoon",
         repeat: 3,
         setXY: { x: 800, y: 450, stepX: 50 }
       })
@@ -349,26 +370,33 @@ export default function Game() {
 
 
       this.anims.create({
-        key: 'raccoonRight',
-        frames: this.anims.generateFrameNumbers('raccoon', { start: 0, end: 3 }),
+        key: "raccoonRight",
+        frames: this.anims.generateFrameNumbers("raccoon", {
+          start: 0,
+          end: 3,
+        }),
         frameRate: 10,
-        repeat: -1
-      })
+        repeat: -1,
+      });
       this.anims.create({
-        key: 'raccoonLeft',
-        frames: this.anims.generateFrameNumbers('raccoon', { start: 5, end: 8 }),
+        key: "raccoonLeft",
+        frames: this.anims.generateFrameNumbers("raccoon", {
+          start: 5,
+          end: 8,
+        }),
         frameRate: 10,
         repeat: -1
       })
 
       raccoons.children.iterate((raccoon) => {
-        raccoon.setVelocityX(100)
-        raccoon.anims.play('raccoonLeft', true)
-        raccoon.setCollideWorldBounds(true)
-        raccoon.setScale(0.3)
-        raccoon.setDepth(3)
+        raccoon.setVelocityX(100);
+        raccoon.anims.play("raccoonLeft", true);
+        raccoon.setCollideWorldBounds(true);
+        raccoon.setScale(0.3);
+        raccoon.setDepth(3);
+      });
 
-      })
+      this.add.image(0, 600, "grass").setDepth(2);
 
 
       this.add.image(0, 600, 'grass')
@@ -433,10 +461,10 @@ export default function Game() {
           health += 20
         }
 
-        player.setTint(0x8DD78D)
-        healthText.setText('Health: ' + health)
-        this.setValue(healthBar, health)
-        twig.destroy()
+        player.setTint(0x8dd78d);
+        healthText.setText("Health: " + health);
+        this.setValue(healthBar, health);
+        twig.destroy();
 
         setTimeout(() => {
           player.clearTint()
@@ -464,8 +492,8 @@ export default function Game() {
         this.setValue(healthBar, health)
 
         setTimeout(() => {
-          player.clearTint()
-        }, 1000)
+          player.clearTint();
+        }, 1000);
       }
 
       healthText = this.add.text(20, 13, `Health: ${health}`, { fontSize: '16px', fill: '#000' }).setDepth(4).setScrollFactor(0)
@@ -476,14 +504,14 @@ export default function Game() {
       let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0)
       this.setValue(healthBar, health)
 
-      let powerBar = this.makeBar(16, 30, 0x76CEFF).setScrollFactor(0)
-      this.setValue(powerBar, thirst)
+      let healthBar = this.makeBar(16, 10, 0x2ecc71).setScrollFactor(0);
+      this.setValue(healthBar, health);
 
-      let magicBar = this.makeBar(16, 50, 0xF26722).setScrollFactor(0)
-      this.setValue(magicBar, hunger)
+      let powerBar = this.makeBar(16, 30, 0x76ceff).setScrollFactor(0);
+      this.setValue(powerBar, thirst);
 
-      let hygieneBar = this.makeBar(16, 70, 0x89FFF8).setScrollFactor(0)
-      this.setValue(hygieneBar, hygiene)
+      let magicBar = this.makeBar(16, 50, 0xf26722).setScrollFactor(0);
+      this.setValue(magicBar, hunger);
 
       grass = this.physics.add.staticGroup()
         .create(400, 620, 'fakeGrass')
@@ -548,6 +576,11 @@ export default function Game() {
 
           raccoon.anims.play('raccoonRight', true)
 
+          raccoon.anims.play("raccoonRight", true);
+        } else if (raccoon.body.blocked.left) {
+          raccoon.setVelocityX(100);
+
+          raccoon.anims.play("raccoonLeft", true);
         }
         else if (raccoon.body.blocked.left) {
 

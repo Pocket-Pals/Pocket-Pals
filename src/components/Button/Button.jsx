@@ -8,6 +8,7 @@ const StyledButton = styled(Button)`
   border: ${(props) => props.border || null};
   font-size: 14px;
   border-radius: 8px;
+  margin: ${(props) => props.margin || "0px"};
   &:hover {
     background-color: ${(props) => props.hoverbgcolor || "#D96D36"} !important;
     color: ${(props) => props.hovercolor || "white"};
@@ -39,6 +40,7 @@ export default function MyButton({
   secondarycolor,
   secondaryhoverbgcolor,
   secondaryhovercolor,
+  margin,
 }) {
   return (
     <>
@@ -56,6 +58,7 @@ export default function MyButton({
         secondaryhoverbgcolor={secondaryhoverbgcolor || "#f67837"} // light orange for transparent button hover
         secondaryhovercolor={secondaryhovercolor || "#fff"}
         border={border || null}
+        margin={margin || "0px"}
       >
         {text || "Button"}
       </StyledButton>
